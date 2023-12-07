@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sản Phẩm Ở DQA SHOP</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+  <meta name="robots" content="noindex,follow" />
+  <style>
+    .shopping-cart {
+      width: 750px;
+      height: 423px;
+      margin: 80px auto;
+      background: #FFFFFF;
+      box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.10);
+      border-radius: 6px;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title {
+      height: 60px;
+      border-bottom: 1px solid #E1E8EE;
+      padding: 20px 30px;
+      color: #5E6977;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    .item {
+      padding: 20px 3px;
+      height: 120px;
+      display: flex;
+    }
+
+    .item:nth-child(3) {
+      border-top: 1px solid #E1E8EE;
+      border-bottom: 1px solid #E1E8EE;
+    }
+
+    /* Buttons -  Delete and Like */
+    .buttons {
+      position: relative;
+      padding-top: 30px;
+      margin-right: 60px;
+    }
+
+    .delete-btn {
+      display: inline-block;
+      cursor: pointer;
+      width: 18px;
+      height: 17px;
+      background: url("delete-icn.svg") no-repeat center;
+      margin-right: 20px;
+    }
+
+    .like-btn {
+      position: absolute;
+      top: 9px;
+      left: 15px;
+      display: inline-block;
+      background: url('twitter-heart.png');
+      width: 60px;
+      height: 60px;
+      background-size: 2900%;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    .is-active {
+      animation-name: animate;
+      animation-duration: .8s;
+      animation-iteration-count: 1;
+      animation-timing-function: steps(28);
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes animate {
+      0% {
+        background-position: left;
+      }
+
+      50% {
+        background-position: right;
+      }
+
+      100% {
+        background-position: right;
+      }
+    }
+
+    /* Product Image */
+    .image {
+      margin-right: 50px;
+    }
+
+    /* Product Description */
+    .description {
+      padding-top: 10px;
+      margin-right: 60px;
+      width: 115px;
+    }
+
+    .description span {
+      display: block;
+      font-size: 14px;
+      color: #43484D;
+      font-weight: 400;
+    }
+
+    .description span:first-child {
+      margin-bottom: 5px;
+    }
+
+    .description span:last-child {
+      font-weight: 300;
+      margin-top: 8px;
+      color: #86939E;
+    }
+
+    /* Product Quantity */
+    .quantity {
+      padding-top: 20px;
+      margin-right: 60px;
+    }
+
+    .quantity input {
+      -webkit-appearance: none;
+      border: none;
+      text-align: center;
+      width: 32px;
+      font-size: 16px;
+      color: #43484D;
+      font-weight: 300;
+    }
+
+    button[class*=btn] {
+      width: 30px;
+      height: 30px;
+      background-color: #E1E8EE;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .minus-btn img {
+      margin-bottom: 3px;
+    }
+
+    .plus-btn img {
+      margin-top: 2px;
+    }
+
+    button:focus,
+    input:focus {
+      outline: 0;
+    }
+
+    /* Total Price */
+    .total-price {
+      width: 83px;
+      padding-top: 27px;
+      text-align: center;
+      font-size: 16px;
+      color: #43484D;
+      font-weight: 300;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .shopping-cart {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+      }
+
+      .item {
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .image img {
+        width: 50%;
+      }
+
+      .image,
+      .quantity,
+      .description {
+        width: 100%;
+        text-align: center;
+        margin: 6px 0;
+      }
+
+      .buttons {
+        margin-right: 20px;
+      }
+    }
+
+    /* Modal Styles */
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  text-align: center; /* Center the text */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.confirmation-modal {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  text-align: center;
+}
+
+.confirmation-modal h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.confirmation-modal button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.confirmation-modal button.cancel {
+  background-color: #aaa;
+}
+
+/* Overlay for the modal */
+.overlay {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- menu -->
+  <nav class="navbar">
+    <div class="navdiv">
+      <div class="logo"><a href="../../menu.html"><img src="../ProductDetail/images/LOGO.png " alt=""></a> </div>
+
+
+      <ul>
+        <li><button class="openBtn" onclick="openSearch()"><img src="./imagesp/bg/icons8-search-100.png" alt=""
+              style="width: 27px;"></button></li>
+        <li><a href="../../menu.html">Trang Chủ</a></li>
+        <li><a href="#">Về Chúng Tôi</a></li>
+        <li><a href="../index.html">Sản Phẩm</a></li>
+        <button class="buttonTK"><a onclick="checkLoggedIn()">Tài Khoản</a></button>
+
+      </ul>
+    </div>
+  </nav>
+
+  <br>
+
+
+  <br>
+  <h1 style="text-align:center">Các Sản Phẩm Trong Giỏ Hàng</h1>
+  <br>
+  <!-- Shooping cart -->
+
+
+
+  <div class="shopping-cart">
+    <!-- Title -->
+    <div class="title">
+      Shopping Bag
+    </div>
+
+    <!-- Product #1 -->
+    <div class="item">
+      <div class="buttons">
+        <span class="delete-btn"></span>
+        <span class="like-btn"></span>
+      </div>
+
+      <div class="image">
+        <img src="../imagesp/item-1.jpg" alt="" />
+      </div>
+
+      <div class="description">
+        <span>Pod màu đỏ</span>
+
+      </div>
+
+      <div class="quantity">
+        <button class="plus-btn" type="button" name="button">
+          <img src="../imagesp/icon/IconPlus.svg" alt="" />
+        </button>
+        <input type="text" name="name" value="1">
+        <button class="minus-btn" type="button" name="button">
+          <img src="../imagesp/icon/Icon.svg" alt="" />
+        </button>
+      </div>
+
+      <div class="total-price">$549</div>
+    </div>
+
+    <!-- Product #2 -->
+    <div class="item">
+      <div class="buttons">
+        <span class="delete-btn"></span>
+        <span class="like-btn"></span>
+      </div>
+
+      <div class="image">
+        <img src="../imagesp/item-1.jpg" alt="" />
+      </div>
+
+      <div class="description">
+        <span>pod Màu Xanh aka ĐỎ</span>
+
+      </div>
+
+      <div class="quantity">
+        <button class="plus-btn" type="button" name="button">
+          <img src="../imagesp/icon/IconPlus.svg" alt="" />
+        </button>
+        <input type="text" name="name" value="1">
+        <button class="minus-btn" type="button" name="button">
+          <img src="../imagesp/icon/Icon.svg" alt="" />
+        </button>
+      </div>
+
+      <div class="total-price">$870</div>
+    </div>
+
+    <!-- Product #3 -->
+    <div class="item">
+      <div class="buttons">
+        <span class="delete-btn"></span>
+        <span class="like-btn"></span>
+      </div>
+
+      <div class="image">
+        <img src="../imagesp/item-1.jpg" alt="" />
+      </div>
+
+      <div class="description">
+        <span>Pod Màu Tím aka Đỏ</span>
+
+      </div>
+
+      <div class="quantity">
+        <button class="plus-btn" type="button" name="button">
+          <img src="../imagesp/icon/IconPlus.svg" alt="" />
+        </button>
+        <input type="text" name="name" value="1">
+        <button class="minus-btn" type="button" name="button">
+          <img src="../imagesp/icon/Icon.svg" alt="" />
+        </button>
+      </div>
+
+      <div class="total-price">$349</div>
+    </div>
+  </div>
+  <div class="buttonApply" style="text-align: center; margin-top: 20px;">
+    <button onclick="applyDiscount()" style="background-color: #4CAF50; /* Green */
+                                                border: none;
+                                                width: 39%;
+                                                color: white;
+                                                padding: 10px 20px;
+                                                text-align: center;
+                                                text-decoration: none;
+                                                display: inline-block;
+                                                font-size: 16px;
+                                                cursor: pointer;
+                                                border-radius: 4px;">
+      Apply
+    </button>
+  </div>
+
+  <!-- *Modal -->
+<!-- Main Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Chọn Địa Chỉ</h2>
+    <!-- Button để chọn địa chỉ theo tài khoản -->
+    <button onclick="useExistingAddress()">Địa Chỉ Theo TK</button>
+    <!-- Button để chọn địa chỉ mới -->
+    <button onclick="openNewAddressModal()">Địa Chỉ Mới</button>
+  </div>
+</div>
+
+<!-- !Confirmation Modal: Nếu Bấm Địa CHỉ THeo Tk -->
+<!-- Overlay cho confirmation modal -->
+<div id="overlay" class="overlay"></div>
+<!-- Confirmation Modal -->
+<div id="confirmationModal" class="confirmation-modal">
+  <!-- Tiêu đề của confirmation modal -->
+  <h3>Xác Nhận Sử Dụng Địa Chỉ</h3>
+  <!-- Nội dung để hiển thị địa chỉ của người dùng -->
+  <p id="confirmationContent"></p>
+  <!-- Button để xác nhận việc sử dụng địa chỉ -->
+  <button onclick="confirmAddress()">Xác Nhận</button>
+  <!-- Button để hủy và đóng confirmation modal -->
+  <button class="cancel" onclick="cancelConfirmation()">Hủy Bỏ</button>
+</div>
+
+<!-- Modal cho nhập địa chỉ mới -->
+<div id="newAddressModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeNewAddressModal()">&times;</span>
+    <h2>Nhập Địa Chỉ Mới</h2>
+    <input type="text" id="newAddressInput" placeholder="Nhập địa chỉ mới">
+    <button onclick="updateAddress()">Cập Nhật</button>
+  </div>
+</div>
+
+  <!-- Đoạn mã JavaScript -->
+  <script>
+    // Hàm để hiển thị main modal
+    function openModal() {
+      document.getElementById('myModal').style.display = 'block';
+    }
+
+    // Hàm để đóng main modal
+    function closeModal() {
+      document.getElementById('myModal').style.display = 'none';
+    }
+
+    // Hàm để xử lý việc chọn địa chỉ theo tài khoản
+    function useExistingAddress() {
+      // Lấy địa chỉ từ local storage
+      const userAddress = localStorage.getItem('userAddress');
+
+      // Kiểm tra xem địa chỉ có tồn tại không
+      if (userAddress) {
+        // Yêu cầu xác nhận
+        const confirmation = confirm(`Bạn có muốn sử dụng địa chỉ sau không?\n${userAddress}`);
+
+        if (confirmation) {
+          // Tiến hành với địa chỉ đã tồn tại
+          alert('Xác nhận sử dụng địa chỉ');
+          closeModal(); // Đóng main modal sau khi xử lý hành động
+        } else {
+          // Xử lý khi người dùng hủy bỏ xác nhận
+          alert('Hủy bỏ sử dụng địa chỉ');
+        }
+      } else {
+        // Xử lý khi không có địa chỉ nào tồn tại trong local storage
+        alert('Không có địa chỉ được lưu trữ');
+        closeModal(); // Đóng main modal sau khi xử lý hành động
+      }
+    }
+
+    // Hàm để xử lý chọn địa chỉ mới
+    function useNewAddress() {
+      alert('Chọn Địa Chỉ Mới');
+      closeModal(); // Đóng main modal sau khi xử lý hành động
+    }
+
+    // Sự kiện lắng nghe để đóng main modal nếu người dùng nhấp ngoài nội dung modal
+    window.onclick = function (event) {
+      const modal = document.getElementById('myModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
+
+  <!-- Đoạn mã JavaScript cho confirmation modal -->
+  <script>
+    // Hàm để mở confirmation modal
+    function useExistingAddress() {
+      const userAddress = localStorage.getItem('userAddress');
+
+      if (userAddress) {
+        const confirmationModal = document.getElementById('confirmationModal');
+        const overlay = document.getElementById('overlay');
+
+        // Đặt địa chỉ của người dùng trong nội dung modal
+        document.getElementById('confirmationContent').textContent = userAddress;
+
+        // Hiển thị overlay và confirmation modal
+        overlay.style.display = 'block';
+        confirmationModal.style.display = 'block';
+      } else {
+        // Xử lý khi không có địa chỉ nào tồn tại trong local storage
+        alert('Không có địa chỉ được lưu trữ');
+        closeModal(); // Đóng main modal sau khi xử lý hành động
+      }
+    }
+
+    // Hàm để xác nhận việc sử dụng địa chỉ
+    function confirmAddress() {
+      // Xử lý logic xác nhận ở đây
+      alert('Xác nhận sử dụng địa chỉ');
+      closeConfirmationModal();
+      window.location.href='./khohangtrong/emptyOrder.html';
+    }
+
+    // Hàm để hủy và đóng confirmation modal
+    function cancelConfirmation() {
+      // Xử lý logic hủy bỏ ở đây
+      alert('Hủy bỏ sử dụng địa chỉ');
+      closeConfirmationModal();
+    }
+
+    // Hàm để đóng confirmation modal
+    function closeConfirmationModal() {
+      const confirmationModal = document.getElementById('confirmationModal');
+      const overlay = document.getElementById('overlay');
+
+      // Ẩn overlay và confirmation modal
+      overlay.style.display = 'none';
+      confirmationModal.style.display = 'none';
+    }
+  </script>
+
+<script>
+  // Hàm để mở modal nhập địa chỉ mới
+  function openNewAddressModal() {
+    document.getElementById('newAddressModal').style.display = 'block';
+  }
+
+  // Hàm để đóng modal nhập địa chỉ mới
+  function closeNewAddressModal() {
+    document.getElementById('newAddressModal').style.display = 'none';
+  }
+
+  // Hàm để cập nhật địa chỉ trong local storage và hiển thị thông báo
+  function updateAddress() {
+    const newAddress = document.getElementById('newAddressInput').value;
+
+    if (newAddress.trim() !== '') {
+      // Cập nhật địa chỉ trong local storage
+      localStorage.setItem('userAddress', newAddress);
+
+      // Hiển thị thông báo cập nhật thành công
+      alert('Địa chỉ đã được thêm vào tài khoản của bạn');
+      
+      // Đóng modal nhập địa chỉ mới
+      closeNewAddressModal();
+      window.location.href='./khohangtrong/emptyOrder.html';
+    } else {
+      // Hiển thị thông báo lỗi nếu địa chỉ mới trống
+      alert('Vui lòng nhập địa chỉ mới');
+    }
+  }
+</script>
+  
+
+  <script>
+    function applyDiscount() {
+  // Display the modal
+  document.getElementById('myModal').style.display = 'block';
+}
+  </script>
+
+  <script type="text/javascript">
+    $('.minus-btn').on('click', function (e) {
+      e.preventDefault();
+      var $this = $(this);
+      var $input = $this.closest('div').find('input');
+      var value = parseInt($input.val());
+
+      if (value > 1) {
+        value = value - 1;
+      } else {
+        value = 0;
+      }
+
+      $input.val(value);
+
+    });
+
+    $('.plus-btn').on('click', function (e) {
+      e.preventDefault();
+      var $this = $(this);
+      var $input = $this.closest('div').find('input');
+      var value = parseInt($input.val());
+
+      if (value < 100) {
+        value = value + 1;
+      } else {
+        value = 100;
+      }
+
+      $input.val(value);
+    });
+
+    $('.like-btn').on('click', function () {
+      $(this).toggleClass('is-active');
+    });
+  </script>
+
+
+
+
+
+  </div>
+
+  <br>
+  <!-- FOOTER -->
+
+  <footer>
+    <section>
+      <div id="containerFooter">
+
+        <div id="webFooter">
+          <h3>POD VIỆT </h3>
+          <p> HÚT đi </p>
+          <p> Không chết </p>
+          <p> có số </p>
+          <p> hết rồi </p>
+        </div>
+        <div id="webFooter">
+          <h3> thành viên: </h3>
+          <p> Hào - SGU </p>
+          <p> Khôi - VLU </p>
+          <p> Quỳnh - Chuyên TDN </p>
+        </div>
+        <div id="webFooter">
+          <h3> HOTLINE: </h3>
+          <p> 03341910jqka2 </p>
+          <p> tứ úy </p>
+          <p> chặt </p>
+          <p> Heo </p>
+
+        </div>
+        <div id="webFooter">
+          <h3> address </h3>
+          <p> 14/08 </p>
+          <p> Trúc Quỳnh xinhhh </p>
+          <p> American Thor </p>
+          <p> united tết </p>
+        </div>
+      </div>
+      <div id="credit"><a href="https://www.facebook.com/DQAPodShop/"> ©Pod Real </a> &nbsp&nbsp&nbsp |
+        &nbsp&nbsp&nbsp
+        <a href="https://www.facebook.com/trucquynh.phamnguyen.9" target="_blank"> My love </a>
+      </div>
+    </section>
+
+  </footer>
+
+  <script>
+    // Sample product data (replace this with your actual data)
+    const products = [
+      {
+        name: "Pod 1 lần - 1",
+        category: "1lan",
+        price: 350.000,
+        image: "../imagesp/product/CS-25-300x300.jpg",
+        description: "Sống chết có số phú quý do trời"
+      },
+      {
+        name: "Pod 1 lần - 2",
+        category: "1lan",
+        price: 200.000,
+        image: "../imagesp/product/doloda-db7000-hoi-300x300.jpg",
+        description: "Sống chết có số phú quý do trời"
+      },
+      {
+        name: "Pod 1 lần - 3",
+        category: "1lans",
+        price: 250.000,
+        image: "./imagesp/product/doloda-mini-bar-300x300.jpg",
+        description: "Sống chết có số phú quý do trời"
+      },
+      {
+        name: "Pod 1 lần - 4",
+        category: "1lan",
+        price: 300.000,
+        image: "../imagesp/product/doloda-pebble-12000-hoi-300x300.jpg",
+        description: "Sống chết có số phú quý do trời."
+      },
+      {
+        name: "Pod 1 lần - 5",
+        category: "1lan",
+        price: 140.000,
+        image: "../imagesp/product/quik-5000-hoi-300x300.jpg",
+        description: "Sống chết có số phú quý do trời."
+      },
+      {
+        name: "Tinh Dầu 1",
+        category: "tinhdau",
+        price: 230.000,
+        image: "../imagesp/product/tinhdau/daddy-juice-300x300.jpg",
+        description: "Sống chết có số phú quý do trời."
+      },
+      {
+        name: "Tinh Dau 2",
+        category: "tinhdau",
+        price: 180.000,
+        image: "../imagesp/product/tinhdau/sweet-21-vape-fruity-blast-30ml-300x300.jpg",
+        description: "Sống chết có số phú quý do trời."
+      },
+      // Add more products as needed
+    ];
+
+
+    // Function to filter products based on search criteria
+    function searchProducts() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const selectedCategory = document.getElementById('category').value;
+      const minPrice = document.getElementById('minPrice').value;
+      const maxPrice = document.getElementById('maxPrice').value;
+
+      const filteredProducts = products.filter(product => {
+        const nameMatch = product.name.toLowerCase().includes(searchTerm);
+        const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
+        const priceMatch = (!minPrice || product.price >= minPrice) && (!maxPrice || product.price <= maxPrice);
+
+        return nameMatch && categoryMatch && priceMatch;
+      });
+
+      displayProducts(filteredProducts);
+    }
+
+    // Function to display products in the product-container
+    function displayProducts(products) {
+      const productContainer = document.getElementById('product-container');
+      productContainer.innerHTML = '';
+
+      products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        // Add product information and make the entire card a clickable link
+        card.innerHTML = `
+            <a href="#" onclick="showProductDetails('${product.name}')">
+                <img src="${product.image}" alt="${product.name}" style="width:100%">
+                <h1>${product.name}</h1>
+                <p class="price">$${product.price.toFixed(2)}</p>
+                <p>${product.description}</p>
+                <p><button>Mua Ngay</button></p>
+            </a>
+        `;
+
+        productContainer.appendChild(card);
+      });
+    }
+
+    // Function to show product details (replace with your actual implementation)
+    function showProductDetails(productName) {
+      // Replace the following URL with the actual URL you want to navigate to for the clicked product
+      const productUrl = `./ProductDetail/`;
+
+      // Navigate to the specified URL
+      window.location.href = productUrl;
+    }
+
+    function resetSearch() {
+      // Clear the search input
+      document.getElementById('search-input').value = '';
+
+      // Reset the category dropdown to its default value
+      document.getElementById('category').value = 'all';
+
+      // Clear the price range inputs
+      document.getElementById('minPrice').value = '';
+      document.getElementById('maxPrice').value = '';
+
+      // Trigger the search function to reset the display
+      searchProducts();
+    }
+  </script>
+
+
+  <!-- script 1 -->
+  <script>
+    function openSearch() {
+      document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function closeSearch() {
+      document.getElementById("myOverlay").style.display = "none";
+    }
+
+
+
+  </script>
+
+  <script>
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    function checkLoggedIn() {
+      const isLoggedIn = localStorage.getItem('loggedInUser'); // Điều này có thể là biến cờ khác nếu bạn sử dụng cách kiểm tra khác
+
+      if (isLoggedIn) {
+        // Nếu đã đăng nhập, chuyển hướng đến trang a
+        window.location.href = "../../page_dadangkynhap/index.html";
+      } else {
+        // Nếu chưa đăng nhập, chuyển hướng đến trang b
+        window.location.href = "../../page_chuadangkynhap/indexNull.html";
+      }
+    }
+  </script>
+</body>
+
+</html>

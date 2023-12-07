@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/back-to-top-button.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/top-sub-search-bar.css">
+    <link rel="stylesheet" href="./css/sub-menu-bar-left.css">
+    <link rel="stylesheet" href="./css/scrool-bar.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="./css/back-to-top-button.js"></script>
+    <link rel="icon" type="image/png" href="./images/logo-hero.png" />
+    <title>Pod 1 lần</title>
+    <script>
+        function checkLoginStatus() {
+            // Replace this with your actual login status check logic
+            return true; // Placeholder value, adjust as needed
+        }
+
+        function handlePayment() {
+            const isLoggedIn = checkLoginStatus();
+
+            if (isLoggedIn) {
+                openModal();
+            } else {
+                // Redirect to the login page or any other page
+                window.location.href = '../../page_chuadangkynhap/indexNull.html';
+            }
+        }
+
+        function openModal() {
+            const modal = document.getElementById('orderForm');
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('orderForm');
+            modal.style.display = 'none';
+        }
+
+        function confirmOrder() {
+            // Your order confirmation logic here
+            alert('Đơn hàng đang được xử lý. Cảm ơn bạn đã đặt hàng!');
+            closeModal();
+        }
+    </script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    
+    <!--https://www.w3schools.com/howto/howto_js_scroll_to_top.asp-->
+    <!--https://stackoverflow.com/questions/27900053/css-transition-with-visibility-not-working-->
+    <button class="move-to-top" onclick="topFunction()" id="myBtn" title="Go to top">
+        <img src="../../images/svg/chevron-up-outline.svg" alt="move to top">
+    </button>
+    <div class="top-sub-search-bar">
+
+    </div>
+    <div class="top-sub-search-bar">
+        
+    </div>
+    <div class="menu-bar-holder">
+        <div class="sub-menu-bar">
+            <div class="menu-item" onclick="window.location.href='../'">
+                <img src="./images/back.png" alt="">
+            </div>
+
+
+        </div>
+        <div class="sub-menu-bar-item-names">
+            
+            
+        </div>
+    </div>
+    <div class="product-item-view">
+        <div class="left" style="background-color: #f2af2f;">
+            <div class="bg-blur">
+                <!--code from - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow -->
+                <div class="slideshow-container">
+                    <div class="mySlides fade">
+                        <div class="numbertext">main</div>
+                        <img src="../imagesp/product/CS-25-300x300.jpg" style="width:100%">
+
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">2 / 4</div>
+                        <img src="../imagesp/product/doloda-db7000-hoi-300x300.jpg" style="width:100%">
+
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">3 / 4</div>
+                        <img src="../imagesp/product/doloda-mini-bar-300x300.jpg" style="width:100%">
+
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">4 / 4</div>
+                        <img src="../imagesp/product/quik-5000-hoi-300x300.jpg" style="width:100%">
+
+                    </div>
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
+                    <div class="dot-containser">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
+                    <script>
+                        let slideIndex = 1;
+                        showSlides(slideIndex);
+
+                        function plusSlides(n) {
+                            showSlides(slideIndex += n);
+                        }
+
+                        function currentSlide(n) {
+                            showSlides(slideIndex = n);
+                        }
+
+                        function showSlides(n) {
+                            let i;
+                            let slides = document.getElementsByClassName("mySlides");
+                            let dots = document.getElementsByClassName("dot");
+                            if (n > slides.length) { slideIndex = 1 }
+                            if (n < 1) { slideIndex = slides.length }
+                            for (i = 0; i < slides.length; i++) {
+                                slides[i].style.display = "none";
+                            }
+                            for (i = 0; i < dots.length; i++) {
+                                dots[i].className = dots[i].className.replace(" active", "");
+                            }
+                            slides[slideIndex - 1].style.display = "block";
+                            dots[slideIndex - 1].className += " active";
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="right" style="background-color: #265073;">
+            <div class="product-detalis">
+                <div class="product-main-details">
+                    <div class="product-name">POD CS9000 Hơi </div>
+                    <div class="product-dis">Pod 1 lần CS25 CS9000 Hơi là em pod một lần đột phá mới với nhiều tính năng
+                        ưu việt. Với khả năng hút hơn 9000 lần, bạn có thể tận hưởng những cú hít mượt mà và thú vị mà
+                        không cần lo lắng về việc thay pin hoặc sạc lại. Với độ Nicotine 3% Nic Salts, giúp bạn vaping
+                        mượt mà, êm ái và không quá lạnh gây gắt cổ. CS25 CS9000 hơi có dung lượng juice lên đến 16ml.
+                        Ngoài ra, dung lượng pin lên đến 500mAh cung cấp năng lượng lâu dài, giúp bạn có thể sử dụng cả
+                        ngày mà không cần sạc lại. Pod còn trang bị cổng sạc Type-C giúp bạn dễ dàng sạc lại mỗi khi
+                        cần.</div>
+                    <div class="product-price">350,000 VND <span class="old-price"></span></div>
+                    <div class="action">
+                        <button onclick="handlePayment()">
+                            <a href="#"><img src="./images/svg/card-outline.svg" alt="card-outline"></a>
+                            Thanh Toán Ngay
+                        </button>
+                    
+                        <!-- Add a div for the pop-up form -->
+                        <div id="orderForm" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal()">&times;</span>
+                                <h2>Thông Tin Đơn Hàng</h2>
+                                <form id="orderDetailsForm">
+                                    <label for="name">Họ và Tên:</label>
+                                    <input type="text" id="name" name="name" required>
+                    
+                                    <label for="address">Địa Chỉ:</label>
+                                    <input type="text" id="address" name="address" required>
+                    
+                                    <label for="phone">Số Điện Thoại:</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                    
+                                    <button type="button" onclick="confirmOrder()">Xác Nhận Đơn Hàng</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="title">Buy now</div>
+                        <button onclick="showMessage('Thêm Vào Giỏ Hàng')">
+                            <a href="#"><img src="./images/svg/cart-outline.svg" alt="cart-outline"></a>
+                        </button>
+                        <div class="title"></div>
+                        <button onclick="showMessage('Đánh Dấu Sản Phẩm')">
+                            <a href="#"><img src="./images/svg/bookmark-outline.svg" alt=""></a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-detalis">
+                <div class="product-otehr-detais">
+                    <div class="title">
+                        <img src="../../images/svg/albums-outline.svg" alt="">
+                        CHI TIẾT
+                    </div>
+                    <div class="grid">
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/trail-sign-outline.svg" alt="">
+                            </div>
+                            <div>Brand</div>
+                            <div>một mình tao-----</div>
+                        </div>
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/pricetags-outline.svg" alt="">
+                            </div>
+                            <div>Model Name</div>
+                            <div>14082006------</div>
+                        </div>
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/radio-outline.svg" alt="">
+                            </div>
+                            <div>Dạng</div>
+                            <div>pod 1 lần----</div>
+                        </div>
+
+
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/download-outline.svg" alt="">
+                            </div>
+                            <div>Xuất Xứ</div>
+                            <div>Chung Quốc</div>
+                        </div>
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/wifi-outline.svg" alt="">
+                            </div>
+                            <div>Công Nghệ</div>
+                            <div>Bay vào không gian</div>
+                        </div>
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/color-palette-outline.svg" alt="">
+                            </div>
+                            <div>Màu</div>
+                            <div>Xanh</div>
+                        </div>
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/crop-outline.svg" alt="">
+                            </div>
+                            <div>Màn Hình</div>
+                            <div>Hiển Thị Mức Pin</div>
+                        </div>
+                        <div class="item">
+                            <div>
+                                <img src="../../images/svg/cloudy-outline.svg" alt="">
+                            </div>
+                            <div>Tặng Kèm</div>
+                            <div>tinh dầu trái cây</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="../../menu.html"><img src="./images/LOGO.png" alt="" style="width: 145%;"></a>
+
+        </div>
+
+    </div>
+
+
+  
+
+
+
+    <script>
+        function showMessage(message) {
+            alert(message);
+        }
+    </script>
+
+    <style>
+        .copyright {
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .copyright a {
+            color: black;
+        }
+
+        @media (max-width:700px) {
+            .copyright {
+                display: none;
+            }
+        }
+    </style>
+</body>
+
+</html>

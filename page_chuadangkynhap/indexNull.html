@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <style>
+        .thongbao,
+        .sign a {
+            font-family: 'Montserrat', sans-serif;
+            /* Sử dụng 'Montserrat' là tên font bạn đã import */
+            text-decoration: none;
+            /* Loại bỏ gạch chân mặc định cho liên kết */
+            color: inherit;
+            /* Sử dụng màu chữ mặc định của phần tử cha */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #265073;
+            overflow: hidden;
+            margin: 0;
+        }
+        body{
+            background-image: url('../images/podbg.png');
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+
+        .thongbao {
+            background-color: aliceblue;
+            margin: 10px 0;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            border: 2px solid white;
+        }
+
+        .container .sign {
+            display: flex;
+            justify-content: space-around;
+
+            white-space: nowrap;
+        }
+
+        .sign a {
+            display: flex;
+            align-items: center;
+        }
+
+        .sign h4 {
+            background-color: aqua;
+            margin: 0 6px;
+            /* Remove margin-right */
+            padding: 8px 75px;
+            /* Adjust padding as needed */
+            text-align: center;
+            display: flex;
+            border-radius: 7px;
+        }
+        .logoheaddick{
+            
+            display: flex;
+            justify-content: center;
+            padding-top: 10%;
+        }
+    </style>
+    
+</head>
+
+<body>
+
+    
+    <div class="container">
+        <div class="logoheaddick">
+            <a href="../index.html"><img src="../images/LOGO.png" alt=""></a>
+        </div>
+        <div class="thongbao">
+            <h1>Bạn Chưa Nhập Tài Khoản</h1>
+        </div>
+
+        <div class="sign">
+            <a href="../login/login.html">
+                <h4>Đăng Nhập</h4>
+            </a>
+            <a href="../dangky/signup.html">
+                <h4>Đăng Ký</h4>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

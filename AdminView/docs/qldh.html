@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styletotal.css">
+    <title>Quản Lý Shop</title>
+    <style>
+        /* Bảng đơn hàng và các style khác giữ nguyên */
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .order-table th {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .order-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .order-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .admin-link {
+            background-color: #e74c3c;
+            display: block;
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .admin-link:hover {
+            background-color: #c0392b;
+        }
+
+        .order-table .processed {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .order-table .not-processed {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="info_account">
+            <div class="profile-img">
+                <img src="../img/spidey_sc.png" alt="">
+            </div>
+            <div class="profile-name">
+                <p>Tên Người Dùng</p>
+            </div>
+        </div>
+        <a href="../docs/index.html">Trang Chủ</a>
+        <a href="./qlnd.html">Quản Lý Người Dùng</a>
+        <a href="./qlsp.html">Quản Lý Sản Phẩm</a>
+        <a class="active" href="#about">Quản Lý Đơn Hàng</a>
+        
+        <a href="../../index.html" class="logobrand"><img src="../img/LOGO.png" alt="" style="width: 100%; "></a>
+    </div>
+
+    <!-- Nội dung trang -->
+    <div class="content">
+        <!-- Tiêu đề trang -->
+        <div class="titleQL">
+            <h1>Quản Lý Đơn Hàng</h1>
+        </div>
+
+        <div>
+            <!-- Bộ lọc thời gian đơn hàng -->
+            <label for="orderDate">Chọn ngày nhập đơn:</label>
+            <input type="date" id="orderDate">
+            <button onclick="filterOrders()">Lọc</button>
+        </div>
+
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>Số Thứ Tự</th>
+                    <th>Mã Số Đơn</th>
+                    <th>Ngày Nhập Đơn</th>
+                    <th>Xem Chi Tiết</th>
+                    <th>Tình Trạng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript sẽ thêm các dòng từ localStorage vào đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Hàm khởi tạo dữ liệu
+        function initializeData() {
+            const sampleOrders = [
+                { id: 123, date: '2023-12-01T08:30:00', processed: false },
+                { id: 456, date: '2023-12-02T10:15:00', processed: true },
+                { id: 789, date: '2023-12-03T12:45:00', processed: false },
+                // Thêm các đơn hàng khác nếu cần
+            ];
+
+            // Kiểm tra xem đã có dữ liệu trong local storage chưa
+            const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+
+            // Nếu chưa có dữ liệu, đặt dữ liệu mẫu vào local storage
+            if (existingOrders.length === 0) {
+                localStorage.setItem('orders', JSON.stringify(sampleOrders));
+            }
+
+            // Lấy toàn bộ đơn hàng từ localStorage khi trang được tải
+            const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+            displayFilteredOrders(allOrders);
+        }
+
+        // Hàm lọc đơn hàng theo ngày
+        function filterOrders() {
+            const selectedDate = document.getElementById('orderDate').value;
+            const filteredOrders = getFilteredOrders(selectedDate);
+            displayFilteredOrders(filteredOrders);
+        }
+
+        // Hàm lấy đơn hàng đã lọc theo ngày
+        function getFilteredOrders(selectedDate) {
+            const ordersFromLocalStorage = JSON.parse(localStorage.getItem('orders')) || [];
+            if (!selectedDate) {
+                return ordersFromLocalStorage; // Trả về toàn bộ đơn hàng nếu không có ngày được chọn
+            }
+            return ordersFromLocalStorage.filter(order => order.date.split('T')[0] === selectedDate);
+        }
+
+        // Hàm hiển thị danh sách đơn hàng đã lọc
+        function displayFilteredOrders(filteredOrders) {
+            const orderTableBody = document.querySelector('.order-table tbody');
+            orderTableBody.innerHTML = '';
+
+            filteredOrders.forEach((order, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${order.id}</td>
+                    <td>${new Date(order.date).toLocaleDateString()}</td>
+                    <td><a href="#" onclick="viewOrderDetailsAdmin(${order.id})">Xem</a></td>
+                    <td>
+                        <select id="statusSelect-${order.id}" onchange="applyStatusChange(${order.id})">
+                            <option value="false" ${!order.processed ? 'selected' : ''}>Chưa xử lý</option>
+                            <option value="true" ${order.processed ? 'selected' : ''}>Đã xử lý</option>
+                        </select>
+                    </td>
+                `;
+                orderTableBody.appendChild(row);
+            });
+        }
+
+        // Hàm xem chi tiết đơn hàng (người quản trị)
+        function viewOrderDetailsAdmin(orderId) {
+            alert(`Xem chi tiết đơn hàng #${orderId} (Admin)`);
+        }
+
+        // Hàm thay đổi trạng thái đơn hàng
+        function applyStatusChange(orderId) {
+            const selectElement = document.getElementById(`statusSelect-${orderId}`);
+            const selectedValue = selectElement.value;
+            changeOrderStatus(orderId, selectedValue);
+        }
+
+        function changeOrderStatus(orderId, status) {
+            // Lấy dữ liệu từ localStorage
+            const ordersFromLocalStorage = JSON.parse(localStorage.getItem('orders')) || [];
+
+            const orderIndex = ordersFromLocalStorage.findIndex(o => o.id === orderId);
+            if (orderIndex !== -1) {
+                ordersFromLocalStorage[orderIndex].processed = status === 'true';
+
+                // Cập nhật dữ liệu trong localStorage
+                localStorage.setItem('orders', JSON.stringify(ordersFromLocalStorage));
+
+                // Cập nhật giao diện
+                displayFilteredOrders(ordersFromLocalStorage);
+            }
+        }
+
+        // Gọi hàm initializeData khi trang được tải
+        initializeData();
+    </script>
+
+</body>
+
+</html>

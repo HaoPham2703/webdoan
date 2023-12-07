@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm Ở DQA SHOP</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Style for the modal */
+        /* Style for the modal */
+        body {
+            margin: 0;
+
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            text-align: center;
+            /* Center the content */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .navbar {
+            overflow: hidden;
+
+        }
+
+        .navdiv {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            height: 98px;
+        }
+
+        .logo a {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+        }
+
+        .navdiv ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        li {
+            margin-right: 20px;
+        }
+
+        li a {
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+
+        }
+
+        .buttonTK {
+            background-color: black;
+            border-radius: 10px;
+            padding: 8px 20px;
+        }
+
+        .buttonTK a {
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
+        @media screen and (max-width: 870px) {
+            .navdiv ul {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: #265073;
+                z-index: 1;
+            }
+
+            .navdiv ul.show {
+                display: flex;
+            }
+
+            .navdiv li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .icon {
+                display: block;
+                z-index: 2;
+            }
+
+            .infomenu {
+                padding-top: 6px;
+                display: flex;
+                flex-direction: column;
+                padding-left: 8%;
+                /* Added to stack items vertically */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar" style="z-index: 99;">
+        <div class="navdiv">
+            <div class="logo">
+                <a href="../../menu.html">
+                    <img src="../../images/LOGO.png" alt="Logo">
+                </a>
+            </div>
+
+            <ul>
+                <div class="infomenu" style="padding-top: 6px;">
+                    <li><a href="../../menu.html">Trang Chủ</a></li>
+                    <li><a href="#footer">Về Chúng Tôi</a></li>
+                    <li><a href="../../sanpham/index.html">Sản Phẩm</a></li>
+                </div>
+                <li class="buttonTK"><a onclick="checkLoggedIn()">Tài Khoản</a></li>
+            </ul>
+
+            <a class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        function myFunction() {
+            var x = document.querySelector(".navdiv ul");
+            x.classList.toggle("show");
+        }
+    </script>
+
+    <script>
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        function checkLoggedIn() {
+            const isLoggedIn = localStorage.getItem('loggedInUser'); // Điều này có thể là biến cờ khác nếu bạn sử dụng cách kiểm tra khác
+
+            if (isLoggedIn) {
+                // Nếu đã đăng nhập, chuyển hướng đến trang a
+                window.location.href = "../page_dadangkynhap/index.html";
+            } else {
+                // Nếu chưa đăng nhập, chuyển hướng đến trang b
+                window.location.href = "../page_chuadangkynhap/indexNull.html";
+            }
+        }
+    </script>
+
+
+
+    <br>
+
+    
+    <br>
+    <h2 style="text-align:center">CÁC SẢN PHẨM BẠN YÊU THÍCH</h2>
+    <br>
+    <div id="product-container">
+        <!-- Product cards will be displayed here -->
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+    <br>
+    <!-- Bảng Thông Báo Kêu Đăng Nhập -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Bạn cần đăng nhập hoặc đăng ký để mua sản phẩm: <span id="productName"></span>.</p>
+            <button onclick="redirectToLoginPage()">Đăng Nhập</button>
+            <button onclick="redirectToRegisterPage()">Đăng Ký</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <section>
+            <div id="containerFooter">
+
+                <div id="webFooter">
+                    <h3>POD VIỆT </h3>
+                    <p> HÚT đi </p>
+                    <p> Không chết </p>
+                    <p> có số </p>
+                    <p> hết rồi </p>
+                </div>
+                <div id="webFooter">
+                    <h3> thành viên: </h3>
+                    <p> Hào - SGU </p>
+                    <p> Khôi - VLU </p>
+                    <p> Quỳnh - Chuyên TDN </p>
+                </div>
+                <div id="webFooter">
+                    <h3> HOTLINE: </h3>
+                    <p> 03341910jqka2 </p>
+                    <p> tứ úy </p>
+                    <p> chặt </p>
+                    <p> Heo </p>
+
+                </div>
+                <div id="webFooter">
+                    <h3> address </h3>
+                    <p> 14/08 </p>
+                    <p> Trúc Quỳnh xinhhh </p>
+                    <p> American Thor </p>
+                    <p> united tết </p>
+                </div>
+            </div>
+            <div id="credit"><a href="https://www.facebook.com/DQAPodShop/"> ©Pod Real </a> &nbsp&nbsp&nbsp |
+                &nbsp&nbsp&nbsp
+                <a href="https://www.facebook.com/trucquynh.phamnguyen.9" target="_blank"> My love </a>
+            </div>
+        </section>
+
+    </footer>
+
+    <script>
+        // Sample product data (replace this with your actual data)
+        let products = [
+            {
+                name: "Pod 1 lần - 1",
+                category: "1lan",
+                price: 350.000,
+                image: "../imagesp/product/CS-25-300x300.jpg",
+                description: "Sống chết có số phú quý do trời"
+            },
+            
+            {
+                name: "Pod 1 lần - 3",
+                category: "1lan",
+                price: 250.000,
+                image: "../imagesp/product/doloda-mini-bar-300x300.jpg",
+                description: "Sống chết có số phú quý do trời"
+            },
+           
+            {
+                name: "Pod 1 lần - 5",
+                category: "1lan",
+                price: 140.000,
+                image: "../imagesp/product/quik-5000-hoi-300x300.jpg",
+                description: "Sống chết có số phú quý do trời."
+            },
+            {
+                name: "Tinh Dầu 1",
+                category: "tinhdau",
+                price: 230.000,
+                image: "../imagesp/product/tinhdau/daddy-juice-300x300.jpg",
+                description: "Sống chết có số phú quý do trời."
+            },
+           
+            {
+                name: "Tinh Dầu 3",
+                category: "tinhdau",
+                price: 120.000,
+                image: "../imagesp/product/tinhdau/tinh-dau-smokio-49-dnb-30ml-300x300.jpg",
+                description: "Vị Cực ngon Hot Trong list"
+            },
+            
+            
+            {
+                name: "Tinh Dầu 6",
+                category: "tinhdau",
+                price: 259.000,
+                image: "../imagesp/product/tinhdau/daddy-juice-300x300.jpg",
+                description: "Vị Cực ngon Hot Trong list"
+            },
+        ];
+
+
+        // Function to filter products based on search criteria
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const selectedCategory = document.getElementById('category').value;
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+
+            const filteredProducts = products.filter(product => {
+                const nameMatch = product.name.toLowerCase().includes(searchTerm);
+                const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
+                const priceMatch = (!minPrice || product.price >= minPrice) && (!maxPrice || product.price <= maxPrice);
+
+                return nameMatch && categoryMatch && priceMatch;
+            });
+
+            displayProducts(filteredProducts);
+        }
+
+        // Function to display products in the product-container
+        function displayProducts(products) {
+    const productContainer = document.getElementById('product-container');
+    productContainer.innerHTML = ''; // Clear previous content
+
+    products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        // Add product information and make the entire card a clickable link
+        card.innerHTML = `
+            <a href="./ProductDetail/"> 
+                <img src="${product.image}" alt="${product.name}" style="width:100%">
+                <h1>${product.name}</h1>
+                <p class="price">${product.price.toFixed(3)} VND</p>
+                <p>${product.description}</p>
+            </a>
+            <p>
+                <button onclick="checkLoggedInForProduct('${product.name}')">Mua Ngay</button>
+                <button onclick="deleteProduct('${product.name}')">Xóa</button>
+            </p>
+        `;
+
+        productContainer.appendChild(card);
+    });
+}
+
+function deleteProduct(productName) {
+    // Find the index of the product to delete
+    const index = products.findIndex(product => product.name === productName);
+
+    if (index !== -1) {
+        // Remove the product from the array
+        products.splice(index, 1);
+
+        // Update the displayed products
+        displayProducts(products);
+    }
+}
+
+// Call the displayProducts function with the initial set of products
+displayProducts(products);
+
+        // Function to show product details (replace with your actual implementation)
+        function showProductDetails(productName) {
+            // Replace the following URL with the actual URL you want to navigate to for the clicked product
+            const productUrl = `./ProductDetail/`;
+
+            // Navigate to the specified URL
+            window.location.href = productUrl;
+        }
+
+        function resetSearch() {
+            // Clear the search input
+            document.getElementById('search-input').value = '';
+
+            // Reset the category dropdown to its default value
+            document.getElementById('category').value = 'all';
+
+            // Clear the price range inputs
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+
+            // Trigger the search function to reset the display
+            searchProducts();
+        }
+    </script>
+
+
+    <!-- script 1 -->
+    <script>
+        function openSearch() {
+            document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function closeSearch() {
+            document.getElementById("myOverlay").style.display = "none";
+        }
+
+
+
+    </script>
+
+
+    <script>
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        function checkLoggedIn() {
+            const isLoggedIn = localStorage.getItem('loggedInUser'); // Điều này có thể là biến cờ khác nếu bạn sử dụng cách kiểm tra khác
+
+            if (isLoggedIn) {
+                // Nếu đã đăng nhập, chuyển hướng đến trang a
+                window.location.href = "../page_dadangkynhap/index.html";
+            } else {
+                // Nếu chưa đăng nhập, chuyển hướng đến trang b
+                window.location.href = "../page_chuadangkynhap/indexNull.html";
+            }
+        }
+
+        // Kiểm tra đăng nhập khi nhấp vào nút "Mua Ngay" cho sản phẩm cụ thể
+
+    </script>
+
+    <script>
+        function checkLoggedInForProduct(productName) {
+            const isLoggedIn = localStorage.getItem('loggedInUser');
+
+            if (isLoggedIn) {
+                // If logged in, redirect to the product detail page
+                redirectToProductDetail(productName);
+            } else {
+                // If not logged in, display the modal
+                document.getElementById('productName').innerText = productName;
+                openModal();
+            }
+        }
+
+        function redirectToProductDetail(productName) {
+            // Replace this URL with the actual URL of your product detail page
+            const productDetailUrl = `./ProductDetail/?product=${productName}`;
+            window.location.href = productDetailUrl;
+        }
+
+        function openModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function redirectToLoginPage() {
+            // Redirect to the login page (replace the URL with your actual login page)
+            window.location.href = '../login/login.html';
+        }
+
+        function redirectToRegisterPage() {
+            // Redirect to the register page (replace the URL with your actual register page)
+            window.location.href = '../dangky/signup.html';
+        }
+    </script>
+
+
+</body>
+
+</html>

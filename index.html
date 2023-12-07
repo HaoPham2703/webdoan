@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DQA Shop</title>
+  <link rel="stylesheet" href="style_menu.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .navbar {
+      overflow: hidden;
+     
+    }
+
+    .navdiv {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      height: 98px;
+    }
+
+    .logo a {
+      font-size: 24px;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+    }
+
+    .navdiv ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+    }
+
+    li {
+      margin-right: 20px;
+    }
+
+    li a {
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+
+    }
+
+    .buttonTK {
+      background-color: black;
+      border-radius: 10px;
+      padding: 8px 20px;
+    }
+
+    .buttonTK a {
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .icon {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
+    }
+
+    @media screen and (max-width: 870px) {
+      .navdiv ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: #265073;
+        z-index: 1;
+      }
+
+      .navdiv ul.show {
+        display: flex;
+      }
+
+      .navdiv li {
+        margin: 10px 0;
+        text-align: center;
+      }
+
+      .icon {
+        display: block;
+        z-index: 2;
+      }
+
+      .infomenu {
+        padding-top: 6px;
+        display: flex;
+        flex-direction: column;
+        padding-left: 8%;
+        /* Added to stack items vertically */
+      }
+    }
+
+    .infomenu {
+      padding-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" style="z-index: 99;">
+    <div class="navdiv">
+      <div class="logo">
+        <a href="./index.html">
+          <img src="images/LOGO.png" alt="Logo">
+        </a>
+      </div>
+
+      <ul>
+        <div class="infomenu">
+          <li><a href="./index.html">Trang Chủ</a></li>
+          <li><a href="#footer">Về Chúng Tôi</a></li>
+          <li><a href="sanpham/index.html">Sản Phẩm</a></li>
+        </div>
+        <li class="buttonTK"><a onclick="checkLoggedIn()">Tài Khoản</a></li>
+      </ul>
+
+      <a class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    function myFunction() {
+      var x = document.querySelector(".navdiv ul");
+      x.classList.toggle("show");
+    }
+  </script>
+
+  <script>
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    function checkLoggedIn() {
+      const isLoggedIn = localStorage.getItem('loggedInUser'); // Điều này có thể là biến cờ khác nếu bạn sử dụng cách kiểm tra khác
+
+      if (isLoggedIn) {
+        // Nếu đã đăng nhập, chuyển hướng đến trang a
+        window.location.href = "./page_dadangkynhap/index.html";
+      } else {
+        // Nếu chưa đăng nhập, chuyển hướng đến trang b
+        window.location.href = "./page_chuadangkynhap/indexNull.html";
+      }
+    }
+  </script>
+
+
+  <!-- Slideshow container -->
+  <div class="slideshow-container">
+
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides fade">
+
+      <img src="./images/img_slides/slide1.png" style="width:100%">
+    </div>
+
+    <div class="mySlides fade">
+      <img src="./images/img_slides/slide2.png" style="width:100%">
+    </div>
+
+    <div class="mySlides fade">
+      <img src="./images/img_slides/slide3.png" style="width:100%">
+    </div>
+
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  
+
+  <!-- The dots/circles -->
+  <div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+
+
+
+  <div class="Product_show">
+
+    <div class="noidung4Product_show">
+      <h3 id="tieudekhampha">Khám Phá Các Loại Pod</h3>
+    </div>
+    <!-- Khu vực hiển thị sản phẩm -->
+    <div id="product-container">
+      <a href="./sanpham/index.html" class="product">
+        <img src="dotmod-dot-disposable-peach-mango_a61e328bd19f419680fc0762d4372eba.png" alt="Product 1">
+        <h3>Pod Xém Phê</h3>
+
+      </a>
+
+      <a href="./sanpham/index.html" class="product">
+        <img src="dotmod-dot-disposable-peach-mango_a61e328bd19f419680fc0762d4372eba.png" alt="Product 2">
+        <h3>Pod Hơi Phê</h3>
+
+      </a>
+
+      <a href="./sanpham/index.html" class="product">
+        <img src="dotmod-dot-disposable-peach-mango_a61e328bd19f419680fc0762d4372eba.png" alt="Product 3">
+        <h3>Pod Phê</h3>
+
+      </a>
+
+      <a href="./sanpham/index.html" class="product">
+        <img src="dotmod-dot-disposable-peach-mango_a61e328bd19f419680fc0762d4372eba.png" alt="Product 4">
+        <h3>Pod Phê Hơn</h3>
+
+      </a>
+
+      <a href="./sanpham/index.html" class="product">
+        <img src="dotmod-dot-disposable-peach-mango_a61e328bd19f419680fc0762d4372eba.png" alt="Product 5">
+        <h3>Pod Siêu Phê</h3>
+
+      </a>
+    </div>
+  </div>
+  <br>
+
+
+
+  <!-- 
+        - #SERVICE
+      -->
+
+  <section class="service">
+    <div class="container">
+
+      <ul class="service-list">
+
+        <li class="service-item">
+          <div class="service-item-icon">
+            <img src="images/img_service/service-icon-1.svg" alt="Service icon">
+          </div>
+
+          <div class="service-content">
+            <p class="service-item-title">Ship miễn phí</p>
+
+            <p class="service-item-text">Trong bán kính 20km từ trung tâm Sài Gòn</p>
+          </div>
+        </li>
+
+        <li class="service-item">
+          <div class="service-item-icon">
+            <img src="images/img_service/service-icon-2.svg" alt="Service icon">
+          </div>
+
+          <div class="service-content">
+            <p class="service-item-title">Đổi trả hậu hĩnh</p>
+
+            <p class="service-item-text">trong vòng 3 ngày đổi trả khi sản phẩm bị lỗi</p>
+          </div>
+        </li>
+
+        <li class="service-item">
+          <div class="service-item-icon">
+            <img src="images/img_service/service-icon-3.svg" alt="Service icon">
+          </div>
+
+          <div class="service-content">
+            <p class="service-item-title">Bảo Mật Thanh Toán</p>
+
+            <p class="service-item-text">100% Uy Tín 188bet</p>
+          </div>
+        </li>
+
+        <li class="service-item">
+          <div class="service-item-icon">
+            <img src="images/img_service/service-icon-4.svg" alt="Service icon">
+          </div>
+
+          <div class="service-content">
+            <p class="service-item-title">Hỗ Trợ Đặc Biệt</p>
+
+            <p class="service-item-text">Trực Hỗ Trợ 24/7</p>
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+  </section>
+  <!-- End SERVICE -->
+  <br>
+  <br>
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+  <!-- END GO TO TOP -->
+
+
+  <!-- 
+        - #CTA
+      -->
+
+  <section class="section cta">
+    <div class="container">
+
+      <ul class="cta-list">
+
+        <li>
+          <div class="cta-card" style="background-image: url('images/img_cta/pod-6000-hoi.jpg.webp')">
+            <p class="card-subtitle">Pod Cute</p>
+
+            <h3 class="card-title" style="color: white;">Có Người Yêu Giảm 50%</h3>
+
+            <a href="#" class="btn btn-link">
+              <span>Mua Ngay</span>
+
+              <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+            </a>
+          </div>
+        </li>
+
+        <li>
+          <div class="cta-card" style="background-image: url('images/img_cta/top-tinh-dau-ngon.jpg.webp')">
+            <p class="card-subtitle">Tinh Dầu</p>
+
+            <h3 class="card-title" style="color: white;">Vô Số Vị <br>Tha Hồ Chọn</h3>
+
+            <a href="#" class="btn btn-link">
+              <span>Mua Ngay</span>
+
+              <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+            </a>
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+  </section>
+  <br>
+
+
+  <!-- 
+        - #INSTA POST
+      -->
+
+  <section class="section insta-post" style="white-space: nowrap;">
+
+    <ul class="insta-post-list has-scrollbar">
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-1.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-2.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-3.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-4.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-5.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-6.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-7.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+      <li class="insta-post-item">
+        <img src="./images/img_insta/insta-8.jpg" width="210" height="210" loading="lazy" alt="Instagram post"
+          class="insta-post-banner image-contain">
+
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </li>
+
+    </ul>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer id="footer">
+    <section>
+      <div id="containerFooter">
+
+        <div id="webFooter">
+          <h3>POD VIỆT </h3>
+          <p> HÚT đi </p>
+          <p> Không chết </p>
+          <p> có số </p>
+          <p> hết rồi </p>
+        </div>
+        <div id="webFooter">
+          <h3> thành viên: </h3>
+          <p> Hào - SGU </p>
+          <p> Khôi - VLU </p>
+          <p> Quỳnh - Chuyên TDN </p>
+        </div>
+        <div id="webFooter">
+          <h3> HOTLINE: </h3>
+          <p> 03341910jqka2 </p>
+          <p> tứ úy </p>
+          <p> chặt </p>
+          <p> Heo </p>
+
+        </div>
+        <div id="webFooter">
+          <h3> address </h3>
+          <p> 14/08 </p>
+          <p> Trúc Quỳnh xinhhh </p>
+          <p> American Thor </p>
+          <p> united tết </p>
+        </div>
+      </div>
+      <div id="credit"><a href="https://www.facebook.com/DQAPodShop/"> ©Pod Real </a> &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
+        <a href="https://www.facebook.com/trucquynh.phamnguyen.9" target="_blank"> My love </a>
+      </div>
+    </section>
+
+  </footer>
+
+
+
+
+  <!-- ====================================================================SCRIPT====================================================== -->
+
+
+
+
+
+
+  <!-- script 1 -->
+  <script>
+    function openSearch() {
+      document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function closeSearch() {
+      document.getElementById("myOverlay").style.display = "none";
+    }
+  </script>
+
+  <!-- script 2 -->
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+    }
+
+    // Tự động chuyển slide sau một khoảng thời gian
+    setInterval(function () {
+      plusSlides(1); // Chuyển sang slide tiếp theo
+    }, 5000); // Thời gian chuyển đổi: 5000 miliseconds (5 giây)
+  </script>
+
+  <!-- SCRIPT 3: BUTTON GO TOP -->
+  <script>
+    // Get the button
+    let mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+
+
+  <!-- script 4 -->
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!-- Trang dk.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styletotal.css">
+    <title>Đăng Ký Người Dùng</title>
+</head>
+
+<body>
+
+    <div class="content">
+        <div class="titleDK">
+            <h1>Đăng Ký Người Dùng</h1>
+        </div>
+        <form id="userForm">
+            <label for="name">Tên Người Dùng:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="gender">Giới Tính:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+            </select>
+
+            <label for="birthdate">Ngày Sinh:</label>
+            <input type="date" id="birthdate" name="birthdate" required>
+
+            <label for="address">Địa Chỉ:</label>
+            <input type="text" id="address" name="address" required>
+
+            <button type="button" onclick="saveUserData()">Lưu Người Dùng</button>
+        </form>
+    </div>
+
+    <script>
+        // Hàm lưu dữ liệu người dùng vào local storage
+        function saveUserData() {
+            const userForm = document.getElementById('userForm');
+            const userData = {
+                name: userForm.elements.name.value,
+                gender: userForm.elements.gender.value,
+                birthdate: userForm.elements.birthdate.value,
+                address: userForm.elements.address.value,
+            };
+
+            // Lấy danh sách người dùng từ local storage hoặc tạo mới nếu chưa có
+            const storedUserData = localStorage.getItem('userList');
+            const userList = storedUserData ? JSON.parse(storedUserData) : [];
+
+            // Thêm người dùng mới vào danh sách
+            userList.push(userData);
+
+            // Lưu lại danh sách người dùng vào local storage
+            localStorage.setItem('userList', JSON.stringify(userList));
+
+            // Chuyển hướng về trang quản lý người dùng
+            
+        }
+
+        
+    </script>
+
+</body>
+
+</html>

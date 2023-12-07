@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Thiết lập ký tự và ngôn ngữ -->
+    <meta charset="UTF-8">
+    <!-- Thiết lập viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Liên kết đến file CSS -->
+    <link rel="stylesheet" href="../css/styletotal.css">
+    <!-- Tiêu đề trang -->
+    <title>Quản Lý Người Dùng</title>
+    <!-- CSS tùy chỉnh -->
+    <style>
+        .locked-user {
+            background-color: #ffcccc;
+            /* Màu đỏ nhạt cho hàng người dùng khóa */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Thanh bên (Sidebar) -->
+    <div class="sidebar">
+        <!-- Thông tin người dùng -->
+        <div class="info_account">
+            <div class="profile-img">
+                <!-- Hình ảnh cá nhân -->
+                <img src="../img/spidey_sc.png" alt="Hình Cá Nhân">
+            </div>
+            <div class="profile-name">
+                <!-- Tên người dùng -->
+                <p>Tên Người Dùng</p>
+            </div>
+        </div>
+        <!-- Menu chức năng -->
+        <div class="menutext">
+            <a href="./index.html">Trang Chủ</a>
+            <a class="active" href="#">Quản Lý Người Dùng</a>
+            <a href="../docs/qlsp.html">Quản Lý Sản Phẩm</a>
+            <a href="./qldh.html">Quản Lý Đơn Hàng</a>
+            
+            <a href="../../index.html" class="logobrand"><img src="../img/LOGO.png" alt="" style="width: 100%; "></a>
+        </div>
+    </div>
+
+    <!-- Nội dung trang -->
+    <div class="content">
+        <!-- Tiêu đề trang -->
+        <div class="titleQL">
+            <h1>Quản Lý Người Dùng</h1>
+        </div>
+        <!-- Nút chức năng -->
+        <div class="chucnungbutton">
+            <!-- Nút Reload Trang -->
+            <button onclick="reloadPage()">Reload Trang</button>
+            <!-- Nút Thêm Người Dùng -->
+            <button onclick="openModal()">Thêm Người Dùng</button>
+            <!-- Modal thêm người dùng -->
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <!-- Nút đóng Modal -->
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <!-- Form thêm người dùng -->
+                    <form id="userFormModal">
+                        <label for="name">Tên Người Dùng:</label>
+                        <input type="text" id="nameModal" name="name" required>
+                        <label for="gender">Giới Tính:</label>
+                        <select id="genderModal" name="gender" required>
+                            <option value="male">Nam</option>
+                            <option value="female">Nữ</option>
+                        </select>
+                        <label for="birthdate">Ngày Sinh:</label>
+                        <input type="date" id="birthdateModal" name="birthdate" required>
+                        <label for="address">Địa Chỉ:</label>
+                        <input type="text" id="addressModal" name="address" required>
+                        <!-- Nút Lưu Người Dùng -->
+                        <button type="button" onclick="saveUserDataModal()">Lưu Người Dùng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng hiển thị thông tin người dùng -->
+        <table class="TotalTable" id="myTable">
+            <thead>
+                <tr>
+                    <th>Tên Người Dùng</th>
+                    <th>Giới Tính</th>
+                    <th>Ngày Sinh</th>
+                    <th>Địa Chỉ</th>
+                    <th>Chức Năng</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <!-- Phân trang -->
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Dữ liệu người dùng đã được lưu trữ trong localStorage
+        const storedUserData = localStorage.getItem('userList');
+        // Chuyển đổi dữ liệu từ chuỗi JSON sang đối tượng JavaScript
+        const userList = JSON.parse(storedUserData);
+        // Lấy thẻ tbody trong bảng để hiển thị dữ liệu người dùng
+        const tableBody = document.getElementById('tableBody');
+        // Số lượng mục hiển thị trên mỗi trang
+        const itemsPerPage = 5;
+        // Trang hiện tại
+        let currentPage = 1;
+
+        // Hiển thị dữ liệu trên trang
+        function displayData(page) {
+            // Xóa nội dung cũ của tbody
+            tableBody.innerHTML = '';
+            // Tính vị trí bắt đầu và kết thúc của dữ liệu trên trang hiện tại
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            // Lấy dữ liệu của trang hiện tại
+            const pageData = userList.slice(startIndex, endIndex);
+
+            // Hiển thị dữ liệu trong bảng
+            pageData.forEach(user => {
+                // Tạo một hàng mới trong bảng
+                const row = tableBody.insertRow();
+                // Tạo các ô và thêm dữ liệu vào từng ô
+                const nameCell = row.insertCell(0);
+                const genderCell = row.insertCell(1);
+                const birthdateCell = row.insertCell(2);
+                const addressCell = row.insertCell(3);
+
+                nameCell.textContent = user.name;
+                genderCell.textContent = user.gender;
+                birthdateCell.textContent = user.birthdate;
+                addressCell.textContent = user.address;
+
+                // Tạo ô chức năng và thêm nút Sửa và Xóa
+                const cellFunc = row.insertCell(4);
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Sửa';
+                // Thêm sự kiện khi nút Sửa được nhấn
+                editButton.addEventListener('click', () => enableEdit(user, nameCell, genderCell, birthdateCell, addressCell, cellFunc));
+                cellFunc.appendChild(editButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Xóa';
+                // Thêm sự kiện khi nút Xóa được nhấn
+                deleteButton.addEventListener('click', () => deleteUser(user, row));
+                cellFunc.appendChild(deleteButton);
+
+                const lockButton = document.createElement('button');
+                lockButton.textContent = 'Khóa';
+                lockButton.addEventListener('click', () => lockUser(user, row));
+                cellFunc.appendChild(lockButton);
+
+                if (user.isLocked) {
+                    const lockedButton = document.createElement('button');
+                    lockedButton.textContent = 'Đã Khóa';
+                    lockedButton.addEventListener('click', () => showUnlockPopup(user));
+                    cellFunc.innerHTML = '';
+                    cellFunc.appendChild(lockedButton);
+                }
+            });
+        }
+
+        // Tạo thanh phân trang
+        function generatePagination() {
+            // Tính tổng số trang
+            const totalPages = Math.ceil(userList.length / itemsPerPage);
+            // Lấy thẻ chứa thanh phân trang
+            const paginationContainer = document.getElementById('pagination');
+
+            // Xóa nội dung cũ của thanh phân trang
+            paginationContainer.innerHTML = '';
+
+            // Tạo nút cho mỗi trang và thêm sự kiện khi nút được nhấn
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                // Thêm sự kiện khi nút trang được nhấn
+                pageLink.addEventListener('click', () => {
+                    currentPage = i;
+                    // Hiển thị dữ liệu của trang mới
+                    displayData(currentPage);
+                    // Đánh dấu trang đang được chọn
+                    highlightActivePage(currentPage);
+                });
+
+                // Thêm nút vào thanh phân trang
+                paginationContainer.appendChild(pageLink);
+            }
+
+            // Hiển thị dữ liệu của trang đầu tiên và đánh dấu trang đầu tiên là trang đang được chọn
+            displayData(currentPage);
+            highlightActivePage(currentPage);
+        }
+
+        // Đánh dấu trang đang được chọn
+        function highlightActivePage(page) {
+            const pageLinks = document.getElementById('pagination').getElementsByTagName('a');
+
+            for (let i = 0; i < pageLinks.length; i++) {
+                // Đánh dấu trang đang được chọn bằng cách thêm lớp 'active'
+                pageLinks[i].classList.toggle('active', i + 1 === page);
+            }
+        }
+
+        // Cho phép chỉnh sửa thông tin người dùng
+        // Cho phép chỉnh sửa thông tin người dùng
+// Cho phép chỉnh sửa thông tin người dùng
+function enableEdit(user, nameCell, genderCell, birthdateCell, addressCell, cellFunc) {
+    // Tạo một ô input để nhập Tên và đặt giá trị hiện tại là Tên của người dùng
+    const nameInput = document.createElement('input');
+    nameInput.value = user.name;
+
+    // Tạo một ô select để chọn Giới tính
+    const genderSelect = document.createElement('select');
+    genderSelect.name = 'gender';
+
+    // Tạo option cho giới tính Nam
+    const maleOption = document.createElement('option');
+    maleOption.value = 'NAM';  // Đặt giá trị của option là 'NAM'
+    maleOption.textContent = 'Nam';  // Hiển thị nội dung là 'Nam'
+
+    // Tạo option cho giới tính Nữ
+    const femaleOption = document.createElement('option');
+    femaleOption.value = 'NỮ';  // Đặt giá trị của option là 'NỮ'
+    femaleOption.textContent = 'Nữ';  // Hiển thị nội dung là 'Nữ'
+
+    // Thêm các option vào ô select và đặt giá trị hiện tại là giới tính của người dùng
+    genderSelect.appendChild(maleOption);
+    genderSelect.appendChild(femaleOption);
+    genderSelect.value = user.gender;
+
+    // Tạo một ô input để nhập Ngày sinh và đặt giá trị hiện tại là Ngày sinh của người dùng
+    const birthdateInput = document.createElement('input');
+    birthdateInput.value = user.birthdate;
+
+    // Tạo một ô input để nhập Địa chỉ và đặt giá trị hiện tại là Địa chỉ của người dùng
+    const addressInput = document.createElement('input');
+    addressInput.value = user.address;
+
+    // Xóa nội dung cũ của ô Tên và thêm ô input Tên mới vào
+    nameCell.innerHTML = '';
+    nameCell.appendChild(nameInput);
+
+    // Xóa nội dung cũ của ô Giới tính và thêm ô select Giới tính mới vào
+    genderCell.innerHTML = '';
+    genderCell.appendChild(genderSelect);
+
+    // Xóa nội dung cũ của ô Ngày sinh và thêm ô input Ngày sinh mới vào
+    birthdateCell.innerHTML = '';
+    birthdateCell.appendChild(birthdateInput);
+
+    // Xóa nội dung cũ của ô Địa chỉ và thêm ô input Địa chỉ mới vào
+    addressCell.innerHTML = '';
+    addressCell.appendChild(addressInput);
+
+    // Tạo một nút 'Lưu' để lưu các thay đổi và thêm sự kiện click để gọi hàm saveChanges
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Lưu';
+    saveButton.addEventListener('click', () => saveChanges(user, nameInput, genderSelect, birthdateInput, addressInput, cellFunc));
+
+    // Xóa nút 'Sửa' và 'Xóa', sau đó thêm nút 'Lưu'
+    cellFunc.innerHTML = '';
+    cellFunc.appendChild(saveButton);
+}
+
+
+
+        // Lưu các thay đổi sau khi chỉnh sửa
+        function saveChanges(user, nameInput, genderInput, birthdateInput, addressInput, cellFunc) {
+            // Cập nhật thông tin người dùng
+            user.name = nameInput.value;
+            user.gender = genderInput.value;
+            user.birthdate = birthdateInput.value;
+            user.address = addressInput.value;
+
+            // Lưu lại danh sách người dùng vào localStorage
+            localStorage.setItem('userList', JSON.stringify(userList));
+
+            // Hiển thị thông tin người dùng đã được cập nhật
+            nameInput.parentElement.innerHTML = user.name;
+            genderInput.parentElement.innerHTML = user.gender;
+            birthdateInput.parentElement.innerHTML = user.birthdate;
+            addressInput.parentElement.innerHTML = user.address;
+
+            // Tải lại trang để cập nhật dữ liệu
+            location.reload();
+        }
+
+        // Xóa người dùng
+        function deleteUser(user, row) {
+            // Hiển thị xác nhận trước khi xóa
+            const confirmation = window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?');
+            if (confirmation) {
+                // Tìm vị trí của người dùng trong danh sách
+                const index = userList.findIndex(u => u === user);
+                // Xóa người dùng khỏi danh sách
+                userList.splice(index, 1);
+                // Lưu lại danh sách người dùng vào localStorage
+                localStorage.setItem('userList', JSON.stringify(userList));
+                // Xóa hàng trong bảng
+                row.remove();
+                // Tải lại trang để cập nhật dữ liệu
+                location.reload();
+            }
+        }
+
+        // Tải lại trang
+        function reloadPage() {
+            location.reload();
+        }
+
+        // Mở Modal thêm người dùng
+        function openModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'block';
+        }
+
+        // Đóng Modal thêm người dùng
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+
+        // Lưu thông tin người dùng từ Modal
+        function saveUserDataModal() {
+            // Lấy form từ Modal
+            const userFormModal = document.getElementById('userFormModal');
+            // Tạo đối tượng chứa thông tin người dùng mới
+            const userData = {
+                name: userFormModal.elements.name.value,
+                gender: userFormModal.elements.gender.value,
+                birthdate: userFormModal.elements.birthdate.value,
+                address: userFormModal.elements.address.value,
+            };
+
+            // Lấy danh sách người dùng từ localStorage, nếu không có thì tạo mới
+            const storedUserData = localStorage.getItem('userList');
+            const userList = storedUserData ? JSON.parse(storedUserData) : [];
+            // Thêm người dùng mới vào danh sách
+            userList.push(userData);
+            // Lưu lại danh sách người dùng vào localStorage
+            localStorage.setItem('userList', JSON.stringify(userList));
+            // Đóng Modal
+            closeModal();
+            // Tải lại trang để cập nhật dữ liệu
+            location.reload();
+        }
+        function lockUser(user, row) {
+            const reason = prompt('Nhập lý do khóa người dùng:');
+            if (reason) {
+                user.isLocked = true;
+                user.lockReason = reason;
+                localStorage.setItem('userList', JSON.stringify(userList));
+                row.classList.add('locked-user');
+
+                const lockedButton = document.createElement('button');
+                lockedButton.textContent = 'Đã Khóa: ' + reason; // Hiển thị lý do khóa
+                lockedButton.addEventListener('click', () => showUnlockPopup(user));
+                const cellFunc = row.cells[4];
+                cellFunc.innerHTML = '';
+                cellFunc.appendChild(lockedButton);
+            }
+        }
+
+        function showUnlockPopup(user) {
+            const unlockReason = prompt('Nhập lý do gỡ khóa người dùng:');
+            if (unlockReason) {
+                user.isLocked = false;
+                user.unlockReason = unlockReason;
+                localStorage.setItem('userList', JSON.stringify(userList));
+
+                // Xóa lớp CSS để trả lại màu của hàng người dùng
+                const row = Array.from(tableBody.children).find(r => r.cells[0].textContent === user.name);
+                row.classList.remove('locked-user');
+
+                location.reload();
+            }
+        }
+
+        // Tạo thanh phân trang khi trang được tải
+        generatePagination();
+    </script>
+
+</body>
+
+</html>

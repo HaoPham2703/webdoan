@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="styleLogin.css" />
+  <!-- font roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /*-----------------------------------*\
+ * #GO TOP
+\*-----------------------------------*/
+
+    #myBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      z-index: 99;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: red;
+      color: white;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    #myBtn:hover {
+      background-color: #555;
+    }
+  </style>
+
+  <script>
+    function checkLogin() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      // Check if username and password are not empty
+      if (username.trim() === '' || password.trim() === '') {
+        alert('Please enter both username and password.');
+        return; // Stop further execution
+      }
+
+      // Check if the entered username and password match the desired values
+      if (username === 'admin' && password === '123456') {
+        // Redirect to page B
+        window.location.href = '../AdminView/docs/index.html';
+      } else {
+        // Display an error message
+       
+      }
+    }
+  </script>
+
+ 
+</head>
+
+<body>
+  <!-- from login -->
+  <div class="login">
+    <div class="login__container">
+      <div class="logohead">
+        <a href="../index.html">
+          <div class="logohead">
+            <img src="../images/LOGO.png" alt="" style="padding-left: 30%;">
+          </div>
+        </a>
+      </div>
+
+      <h1>Đăng Nhập</h1>
+      <form>
+        <h5>Email</h5>
+        <!-- Add id="username" to the email input field -->
+        <input type="text" class="input-login-username" id="username" />
+        <h5>Password</h5>
+        <!-- Add id="password" to the password input field -->
+        <input type="password" class="input-login-password" id="password" />
+        <!-- Add onclick attribute to call the checkLogin function -->
+        <button type="button" class="login__signInButton" onclick="checkLogin()">Đăng Nhập</button>
+      </form>
+      <a href="../dangky/signup.html" class="login__registerButton">Bạn Chưa Có Tài khoản</a>
+
+    </div>
+  </div>
+
+  <!-- #GO TO TOP -->
+  <button onclick="topFunction()" id="myBtn" title="Go Menu">Top</button>
+
+  <script src="./main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,696 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar {
+
+    background: #265073;
+    font-family: calibri;
+    padding-right: 15px;
+    padding-left: 15px;
+    height: 120px;
+
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+
+.logo a {
+    font-size: 35px;
+    font-weight: 600;
+    color: white;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+
+}
+
+li a {
+    color: white;
+    font-size: 18px;
+
+    margin-right: 25px;
+}
+
+.buttonTK {
+    background-color: black;
+    margin-left: 10px;
+    border-radius: 10px;
+    padding: 3px;
+
+    width: 120px;
+
+}
+
+.buttonTK a {
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+ul {
+
+    padding-bottom: 1.2%;
+    font-weight: 400;
+
+}
+
+.openBtn {
+    background: transparent;
+    border: none;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.openBtn:hover {
+    background: transparent;
+    opacity: 50%;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.overlay-content {
+    position: relative;
+    top: 46%;
+    width: 80%;
+    text-align: center;
+    margin-top: 30px;
+    margin: auto;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    cursor: pointer;
+    color: white;
+}
+
+.overlay .closebtn:hover {
+    color: #ccc;
+}
+
+.overlay input[type=text] {
+    padding: 15px;
+    font-size: 17px;
+    border: none;
+    float: left;
+    width: 80%;
+    background: white;
+}
+
+.overlay input[type=text]:hover {
+    background: #f1f1f1;
+}
+
+.overlay button {
+    float: left;
+    width: 20%;
+    padding: 15px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.overlay button:hover {
+    background: #bbb;
+}
+
+
+
+.TieuDe {
+    color: #ffffff;
+}
+
+/* slide chuyển */
+/* Hide the images by default */
+.mySlides {
+    display: none;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Caption text */
+
+
+/* Number text (1/3 etc) */
+
+
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin-bottom: 20px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+    background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+
+.noidung4Product_show {
+    text-align: center;
+    font-size: auto;
+}
+
+/* Add your existing styles here */
+
+@media only screen and (max-width: 870px) {
+
+    /* Styles for screens with a maximum width of 475px */
+    .navbar {
+        height: auto;
+        /* Adjust height as needed for smaller screens */
+    }
+
+    .navdiv {
+        flex-direction: column;
+        /* Stack items vertically on smaller screens */
+        align-items: flex-start;
+        /* Align items to the start of the container */
+        padding-top: 10px;
+        /* Adjust top padding as needed for smaller screens */
+    }
+
+    .logo a {
+        font-size: 25px;
+        /* Adjust font size for smaller screens */
+    }
+
+    li {
+        display: block;
+        /* Stack list items vertically on smaller screens */
+        margin-bottom: 10px;
+        /* Add space between list items */
+    }
+
+    li a {
+        margin-right: 0;
+        /* Remove right margin for list items on smaller screens */
+    }
+
+    .buttonTK {
+        margin-left: 0;
+        /* Remove left margin for the button */
+        width: 100%;
+        /* Make the button full width on smaller screens */
+    }
+
+    .overlay-content {
+        width: 100%;
+        /* Make the overlay content full width on smaller screens */
+    }
+
+    .overlay input[type="text"],
+    .overlay button {
+        width: 100%;
+        /* Make input and button full width on smaller screens */
+    }
+
+    ul {
+        display: none;
+        /* Hide the entire <ul> element */
+    }
+}
+
+
+
+/* Thiết lập các kiểu CSS cho khu vực sản phẩm */
+#product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    /* Sử dụng space-evenly để cách đều nhau */
+}
+
+.product {
+    width: 200px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product h3 {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.product p {
+    color: #555;
+}
+
+
+/* Footer */
+#containerFooter {
+    width: 100%;
+    background-color: #265073;
+    color: white;
+    letter-spacing: 1px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-transform: uppercase;
+    font-size: 15px;
+    padding: 15px 300px;
+    box-sizing: border-box;
+}
+
+#containerFooter h3:hover,
+#containerFooter p:hover {
+    color: lightslategray;
+    cursor: pointer;
+}
+
+#webFooter {
+    padding-top: 30px;
+    font-size: 12px;
+}
+
+#credit {
+    width: 100%;
+    margin: auto;
+    padding: 20px 0;
+    text-align: center;
+    background-color: #265073;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+#credit a {
+    color: white;
+    text-decoration: none;
+    position: relative;
+}
+
+#credit a::after {
+    content: "";
+    background: white;
+    mix-blend-mode: exclusion;
+    width: calc(100% + 18px);
+    height: 0;
+    position: absolute;
+    bottom: -4px;
+    left: -10px;
+    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+#credit a:hover::after {
+    height: calc(100% + 8px)
+}
+
+/* ----------------------------- MEDIA QUERY --------------------------- */
+
+@media(max-width: 1350px) {
+    #containerFooter {
+        padding: 15px 200px;
+    }
+}
+
+@media(max-width: 1166px) {
+    #containerFooter {
+        padding: 15px 100px;
+    }
+}
+
+@media(max-width: 950px) {
+    #containerFooter {
+        padding: 15px 50px;
+    }
+}
+
+@media(max-width: 850px) {
+    #containerFooter {
+        font-size: 13px;
+    }
+
+    #webFooter {
+        font-size: 10px;
+    }
+}
+
+@media(max-width: 750px) {
+    #containerFooter {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 15px 100px;
+    }
+
+    #webFooter {
+        padding: 15px 20px;
+    }
+}
+
+@media(max-width: 540px) {
+    #containerFooter {
+        padding: 0 25px;
+    }
+}
+
+
+/*-----------------------------------*\
+ * #SERVICE
+\*-----------------------------------*/
+
+.service {
+    padding-block: 45px;
+}
+
+.service-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.service-item {
+    max-width: 235px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.service-item-icon {
+    width: 45px;
+}
+
+.service-item-icon img {
+    margin-inline: auto;
+}
+
+.service-item-title {
+    color: var(--eerie-black);
+    font-size: var(--fs-7);
+    font-weight: var(--fw-600);
+}
+
+
+
+/*-----------------------------------*\
+ * #GO TOP
+\*-----------------------------------*/
+
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+#myBtn:hover {
+    background-color: #555;
+}
+
+
+
+
+/*-----------------------------------*\
+ * #CTA
+\*-----------------------------------*/
+
+.cta-list {
+    display: grid;
+    gap: 40px;
+}
+
+.cta-card {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.cta-card .card-subtitle {
+    font-size: var(--fs-5);
+    margin-bottom: 15px;
+}
+
+.cta-card .card-title {
+    color: inherit;
+    line-height: 1.3;
+    margin-bottom: 20px;
+}
+
+.cta-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.cta-card {
+    padding-inline: 50px;
+}
+
+@media (min-width: 992px) {
+
+    /**
+   * CTA
+   */
+
+    .cta-list {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    .cta-card {
+        padding-inline: 50px;
+    }
+
+    /**
+   * INSTA POST
+   */
+
+    .insta-post-list .insta-post-item {
+        min-width: 16.666%;
+    }
+
+}
+
+
+@media (min-width: 575px) {
+    /**
+   * CTA
+   */
+
+    .cta-card {
+        text-align: left;
+    }
+
+    .cta-card .card-title {
+        max-width: 14ch;
+    }
+
+    .cta-card .btn-link {
+        margin-inline: 0;
+    }
+
+    /**
+   * INSTA POST
+   */
+
+    .insta-post-list .insta-post-item {
+        min-width: 25%;
+    }
+}
+
+.card-subtitle,
+.card-title {
+    color: white;
+}
+
+.card-title {
+    color: white;
+
+}
+
+
+/*-----------------------------------*\
+ * #INSTA POST
+\*-----------------------------------*/
+
+.insta-post-list {
+    gap: 0;
+}
+
+.insta-post-list .insta-post-item {
+    position: relative;
+    min-width: 33.33%;
+    aspect-ratio: 1 / 1;
+}
+
+.insta-post-link {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--oxford-blue_60);
+    opacity: 0;
+    transition: var(--transition-1);
+}
+
+.insta-post-link ion-icon {
+    color: var(--white);
+    font-size: 40px;
+}
+
+.insta-post-link:is(:hover, :focus) {
+    opacity: 1;
+}
+
+
+
+
+@media (min-width: 768px) {
+    /**
+   * INSTA POST
+   */
+
+    .insta-post-list .insta-post-item {
+        min-width: 20%;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    /**
+   * INSTA POST
+   */
+
+    .insta-post {
+        padding-block-end: 0;
+    }
+
+    .insta-post-list .insta-post-item {
+        min-width: 12.5%;
+    }
+
+    .insta-post-list {
+        padding-bottom: 0;
+    }
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: 10px;
+    text-align: center;
+    font-family: Arial;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.price {
+    color: grey;
+    font-size: 22px;
+}
+
+.card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+.card button:hover {
+    opacity: 0.7;
+}

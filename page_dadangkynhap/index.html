@@ -1,0 +1,223 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Your existing head content -->
+  <title>Đăng Ký</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .logoheaddick img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .thongbao {
+      margin-top: 20px;
+    }
+
+    .buttonContainer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .buttonContainer div {
+      margin: 10px 0;
+    }
+
+    .buttonContainer a {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 15px 200px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      display: block;
+    }
+
+    .buttonContainer a:hover {
+      background-color: #45a049;
+    }
+
+    #logoutButton {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  width: 100%; /* Make the logout button fill the width of the container */
+}
+
+#logoutButton:hover {
+  background-color: #d32f2f;
+}
+
+    /* Responsive Design */
+    @media screen and (max-width: 700px) {
+      .buttonContainer div,
+      #logoutButton {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="logoheaddick">
+      <a href="../index.html"><img src="../images/LOGO.png" alt=""></a>
+    </div>
+    <div class="thongbao">
+      <h1 id="welcomeMessage">Chào mừng, đến với trang web</h1>
+    </div>
+
+    <!-- Thêm nút đăng xuất -->
+    
+    <div class="buttonContainer">
+      <div class="inputTextADRESS">
+        <label for="address" style="color: white; font-size: 20px; font-weight: 600;">ĐỊA CHỈ: </label>
+        <input type="text" id="address" placeholder="Nhập địa chỉ của bạn">
+        <button onclick="updateAddress()">Cập nhật</button>
+      </div>
+      <div id="wishlistDiv">
+          <a href="../sanpham/wishlist/spyeuthich.html" class="actionButton">Wish list</a>
+      </div>
+      <div id="historyDiv">
+          <a href="../sanpham/history/index.html" class="actionButton">Lịch Sử Mua Hàng</a>
+      </div>
+      <div id="cartDiv">
+          <a href="../sanpham/donebuy/index.html" class="actionButton">Giỏ Hàng</a>
+      </div>
+
+      
+<!-- !SCript chỉnh địa chỉ -->
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          checkLoggedInUser();
+          // Load address from local storage and update the input field
+          const storedAddress = localStorage.getItem("userAddress");
+          if (storedAddress) {
+            document.getElementById("address").value = storedAddress;
+          }
+        });
+    
+        function updateAddress() {
+          // Get the entered address
+          const address = document.getElementById("address").value;
+    
+          // Update local storage with the new address
+          localStorage.setItem("userAddress", address);
+    
+          alert("Đã cập nhật địa chỉ");
+        }
+      </script>
+      <div id="logoutDiv">
+          <button id="logoutButton">Đăng Xuất</button>
+      </div>
+  </div>
+  
+
+    <!-- Các phần khác của trang web có thể được thêm ở đây -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        checkLoggedInUser();
+      });
+
+      function checkLoggedInUser() {
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        const loggedInUser = localStorage.getItem("loggedInUser");
+
+        if (loggedInUser) {
+          // Nếu đã đăng nhập, lấy tên người dùng và cập nhật thông báo chào mừng
+          const username = loggedInUser.split("@")[0];
+          updateWelcomeMessage(username);
+
+          // Hiển thị nút đăng xuất
+          showLogoutButton();
+        }
+      }
+
+      function updateWelcomeMessage(username) {
+        // Cập nhật thông báo chào mừng với tên người dùng
+        const welcomeMessage = document.getElementById("welcomeMessage");
+
+        if (welcomeMessage) {
+          if (username) {
+            welcomeMessage.textContent = `Chào mừng, ${username} đến với trang web`;
+          } else {
+            welcomeMessage.textContent = "Chào mừng đến với trang web của mình";
+            login(); // Gọi hàm đăng nhập nếu chưa đăng nhập
+          }
+        }
+      }
+
+      // Hàm ví dụ đăng nhập
+      function login() {
+        // Thêm logic đăng nhập tại đây
+        // Ví dụ, bạn có thể chuyển hướng đến trang đăng nhập
+        window.location.href = "../login/login.html";
+      }
+
+      function showLogoutButton() {
+        // Hiển thị nút đăng xuất và thêm sự kiện khi nút được nhấp
+        const logoutButton = document.getElementById("logoutButton");
+
+        if (logoutButton) {
+          logoutButton.style.display = "block";
+          logoutButton.addEventListener("click", logout);
+        }
+      }
+
+      function logout() {
+        // Xóa người dùng đã đăng nhập khỏi lưu trữ local
+        localStorage.removeItem("loggedInUser");
+
+        // Đặt lại thông báo chào mừng
+        updateWelcomeMessage(null);
+
+        // Ẩn nút đăng xuất
+        hideLogoutButton();
+
+        // Chuyển hướng đến indexNull.html
+        window.location.href = "../index.html";
+
+        alert("Đã đăng xuất");
+      }
+
+      function hideLogoutButton() {
+        // Ẩn nút đăng xuất
+        const logoutButton = document.getElementById("logoutButton");
+
+        if (logoutButton) {
+          logoutButton.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+
+</html>

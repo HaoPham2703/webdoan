@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styletotal.css">
+    <title>Quản Lý Sản Phẩm</title>
+    <style>
+        /* Add your custom styles here */
+        /* ... */
+
+        /* Added styles for the product table */
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add your JavaScript code here
+            // ...
+
+            // Function to add product to local storage
+            function addToLocalStorage(imageSrc, productName, productPrice) {
+                const existingProducts = JSON.parse(localStorage.getItem("products")) || [];
+                const newProduct = {
+                    imageSrc: imageSrc,
+                    productName: productName,
+                    productPrice: productPrice
+                };
+                existingProducts.push(newProduct);
+                localStorage.setItem("products", JSON.stringify(existingProducts));
+
+                // After adding the product, re-render the product table
+                renderProductTable();
+            }
+
+            // Function to remove product from local storage
+            function removeFromLocalStorage(productName) {
+                const existingProducts = JSON.parse(localStorage.getItem("products")) || [];
+                const updatedProducts = existingProducts.filter(product => product.productName !== productName);
+                localStorage.setItem("products", JSON.stringify(updatedProducts));
+
+                // After removing the product, re-render the product table
+                renderProductTable();
+            }
+
+            // Function to edit product in local storage
+            function editProduct(productName) {
+    // Find the product in local storage
+    const existingProducts = JSON.parse(localStorage.getItem("products")) || [];
+    const editedProductIndex = existingProducts.findIndex(product => product.productName === productName);
+
+    if (editedProductIndex !== -1) {
+        const tableBody = document.getElementById("productTableBody");
+        const editedRow = tableBody.children[editedProductIndex];
+
+        // Make table cells editable
+        editedRow.cells[0].innerHTML = `<input type="file" id="editedProductImage" accept="image/*">`; // Image input
+        editedRow.cells[1].contentEditable = true; // Name cell
+        editedRow.cells[2].contentEditable = true; // Price cell
+
+        // Add Save button to save changes
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save";
+        saveButton.addEventListener("click", function () {
+            const newImageInput = document.getElementById("editedProductImage");
+            saveChanges(
+                productName,
+                newImageInput.files[0], // Get the new image file
+                editedRow.cells[1].innerText,
+                editedRow.cells[2].innerText
+            );
+        });
+
+        // Add Cancel button to cancel editing
+        const cancelButton = document.createElement("button");
+        cancelButton.textContent = "Cancel";
+        cancelButton.addEventListener("click", function () {
+            renderProductTable(); // Revert changes
+        });
+
+        // Replace "Edit" button with Save and Cancel buttons
+        editedRow.cells[3].innerHTML = "";
+        editedRow.cells[3].appendChild(saveButton);
+        editedRow.cells[3].appendChild(cancelButton);
+    }
+}
+
+function saveChanges(productName, newImageFile, newProductName, newProductPrice) {
+    const existingProducts = JSON.parse(localStorage.getItem("products")) || [];
+    const editedProductIndex = existingProducts.findIndex(product => product.productName === productName);
+
+    if (editedProductIndex !== -1) {
+        // Update the product details
+        existingProducts[editedProductIndex].imageSrc = URL.createObjectURL(newImageFile); // Use the new image file
+        existingProducts[editedProductIndex].productName = newProductName;
+        existingProducts[editedProductIndex].productPrice = newProductPrice;
+
+        localStorage.setItem("products", JSON.stringify(existingProducts));
+
+        // Re-render the product table
+        renderProductTable();
+    }
+}
+            // Function to render product table
+            function renderProductTable() {
+                const tableBody = document.getElementById("productTableBody");
+                const products = JSON.parse(localStorage.getItem("products")) || [];
+
+                // Clear the existing table rows
+                tableBody.innerHTML = "";
+
+                products.forEach(product => {
+                    const row = tableBody.insertRow();
+                    row.innerHTML = `
+            <td><img src="${product.imageSrc}" alt="${product.productName}" style="width:50px; height:auto;"></td>
+            <td>${product.productName}</td>
+            <td>${product.productPrice}</td>
+            <td>
+                <button onclick="removeProduct('${product.productName}')">Remove</button>
+                <button class="edit" onclick="editProduct('${product.productName}', '${product.imageSrc}', '${product.productPrice}')">Edit</button>
+            </td>
+        `;
+
+                    // Add event listener for the "Edit" button in the current row
+                    const editButton = row.querySelector(".edit");
+                    editButton.addEventListener("click", function () {
+                        editProduct(product.productName, product.imageSrc, product.productPrice);
+                    });
+                });
+            }
+
+            // Add product function
+            window.addProduct = function () {
+                const imageFileInput = document.getElementById('productImage');
+                const productName = document.getElementById('productName').value;
+                const productPrice = document.getElementById('productPrice').value;
+
+                if (imageFileInput.files.length > 0) {
+                    const imageFile = imageFileInput.files[0];
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const imageSrc = e.target.result;
+
+                        addToLocalStorage(imageSrc, productName, productPrice);
+
+                        // Reset form fields
+                        document.getElementById('productImage').value = "";
+                        document.getElementById('productName').value = "";
+                        document.getElementById('productPrice').value = "";
+                    };
+
+                    reader.readAsDataURL(imageFile);
+                }
+            };
+
+            // Remove product function
+            window.removeProduct = function (productName) {
+                removeFromLocalStorage(productName);
+            };
+
+            // Initial render of the product table
+            renderProductTable();
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <!-- !Đoạn Code Này Sẽ Hoạt Động Cho JS - lấy dữ liệu từ local storage -->
+        <!-- <div class="info_account">
+            <div class="profile-img">
+                Hình Cá Nhân
+                <img id="profileImage" alt="">
+            </div>
+
+            <div class="profile-name">
+                <p id="profileName">Tên Người Dùng</p>
+            </div>
+        </div> -->
+
+        <div class="info_account">
+            <div class="profile-img">
+                <!-- Hình Cá Nhân -->
+                <img src="../img/spidey_sc.png" alt="">
+            </div>
+
+            <div class="profile-name">
+                <p>Tên Người Dùng</p>
+            </div>
+        </div>
+        <a href="./index.html">Trang Chủ</a>
+        <a href="./qlnd.html">Quản Lý Người Dùng</a>
+        <a class="active" href="#contact">Quản Lý Sản Phẩm</a>
+        <a href="./qldh.html">Quản Lý Đơn Hàng</a>
+        
+        <a href="../../index.html" class="logobrand"><img src="../img/LOGO.png" alt="" style="width: 100%; "></a>
+    </div>
+
+    <!-- Nội dung trang -->
+    <div class="content">
+        <!-- Tiêu đề trang -->
+        <div class="titleQL">
+            <h1>Quản Lý Sản Phẩm</h1>
+        </div>
+        <!-- Product table container -->
+        <div id="productTableContainer">
+
+            <form id="addProductForm">
+                <label for="productImage">Hình:</label>
+                <input type="file" id="productImage" accept="image/*" required>
+                <label for="productName">Tên Sản Phẩm:</label>
+                <input type="text" id="productName" required>
+                <label for="productPrice">Giá Tiền:</label>
+                <input type="text" id="productPrice" required>
+                <button type="button" onclick="addProduct()">Add Product</button>
+            </form>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hình</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Giá Tiền</th>
+                            <th>Chức Năng</th>
+                        </tr>
+                    </thead>
+                    <!-- Empty tbody to dynamically add products -->
+                    <tbody id="productTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- ! -->
+    </div>
+
+
+    <script>
+        <!-- ! Format giá tiền-->
+        // ... (previous JavaScript code) ...
+
+        // Function to format the price input dynamically
+        function formatPriceInput(input) {
+            // Remove non-digit characters
+            let value = input.value.replace(/\D/g, '');
+            // Add dots as thousands separators
+            value = Number(value).toLocaleString();
+            // Update the input value
+            input.value = value;
+        }
+
+        // Event listener to format the price input dynamically
+        document.getElementById('productPrice').addEventListener('input', function () {
+            formatPriceInput(this);
+        });
+
+        // ... (remaining JavaScript code) ...
+    </script>
+
+    <!-- !SCRIPT 1: Kiểm tra xem file được gửi vào có phải là ảnh không -->
+    <script>
+        function validateFile() {
+            const input = document.getElementById('productImage');
+            const file = input.files[0];
+
+            if (file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+                if (allowedTypes.includes(file.type)) {
+                    // Loại tệp tin hợp lệ, có thể xử lý tại đây
+                    console.log('Tệp tin hợp lệ:', file.name);
+                } else {
+                    // Loại tệp tin không hợp lệ, có thể thông báo lỗi hoặc làm gì đó khác
+                    alert('Chỉ chấp nhận file hình ảnh (JPEG, PNG, GIF).');
+                    input.value = ''; // Xóa lựa chọn tệp tin
+                }
+            }
+        }
+    </script>
+    <!-- !SCRIPT 2: Xem trước hình -->
+    <script>
+        function previewImage() {
+            const input = document.getElementById('productImage');
+            const preview = document.getElementById('previewImage');
+            const file = input.files[0];
+
+            if (file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+                if (allowedTypes.includes(file.type)) {
+                    // Đọc file và hiển thị ảnh xem trước
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        function togglePreview() {
+            const preview = document.getElementById('previewImage');
+            // Đảo ngược trạng thái ẩn/hiện của ảnh
+            preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+
+    <!-- <script>
+        // Lấy dữ liệu từ local storage
+        const storedProfileImage = localStorage.getItem('profileImage');
+        const storedProfileName = localStorage.getItem('profileName');
+
+        // Kiểm tra xem dữ liệu có tồn tại không
+        if (storedProfileImage) {
+            document.getElementById('profileImage').src = storedProfileImage;
+        }
+
+        if (storedProfileName) {
+            document.getElementById('profileName').textContent = storedProfileName;
+        }
+    </script> -->
+
+</body>
+
+</html>

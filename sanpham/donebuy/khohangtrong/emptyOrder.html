@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm Ở DQA SHOP</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+    <meta name="robots" content="noindex,follow" />
+    <style>
+        .shopping-cart {
+  width: 750px;
+  height: 423px;
+  margin: 80px auto;
+  background: #FFFFFF;
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  height: 60px;
+  border-bottom: 1px solid #E1E8EE;
+  padding: 20px 30px;
+  color: #5E6977;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.item {
+  padding: 20px 3px;
+  height: 120px;
+  display: flex;
+}
+
+.item:nth-child(3) {
+  border-top:  1px solid #E1E8EE;
+  border-bottom:  1px solid #E1E8EE;
+}
+
+/* Buttons -  Delete and Like */
+.buttons {
+  position: relative;
+  padding-top: 30px;
+  margin-right: 60px;
+}
+
+.delete-btn {
+  display: inline-block;
+  cursor: pointer;
+  width: 18px;
+  height: 17px;
+  background: url("delete-icn.svg") no-repeat center;
+  margin-right: 20px;
+}
+
+.like-btn {
+  position: absolute;
+  top: 9px;
+  left: 15px;
+  display: inline-block;
+  background: url('twitter-heart.png');
+  width: 60px;
+  height: 60px;
+  background-size: 2900%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.is-active {
+  animation-name: animate;
+  animation-duration: .8s;
+  animation-iteration-count: 1;
+  animation-timing-function: steps(28);
+  animation-fill-mode: forwards;
+}
+
+@keyframes animate {
+  0%   { background-position: left;  }
+  50%  { background-position: right; }
+  100% { background-position: right; }
+}
+
+/* Product Image */
+.image {
+  margin-right: 50px;
+}
+
+/* Product Description */
+.description {
+  padding-top: 10px;
+  margin-right: 60px;
+  width: 115px;
+}
+
+.description span {
+  display: block;
+  font-size: 14px;
+  color: #43484D;
+  font-weight: 400;
+}
+
+.description span:first-child {
+  margin-bottom: 5px;
+}
+.description span:last-child {
+  font-weight: 300;
+  margin-top: 8px;
+  color: #86939E;
+}
+
+/* Product Quantity */
+.quantity {
+  padding-top: 20px;
+  margin-right: 60px;
+}
+.quantity input {
+  -webkit-appearance: none;
+  border: none;
+  text-align: center;
+  width: 32px;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+
+button[class*=btn] {
+  width: 30px;
+  height: 30px;
+  background-color: #E1E8EE;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.minus-btn img {
+  margin-bottom: 3px;
+}
+.plus-btn img {
+  margin-top: 2px;
+}
+button:focus,
+input:focus {
+  outline:0;
+}
+
+/* Total Price */
+.total-price {
+  width: 83px;
+  padding-top: 27px;
+  text-align: center;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .shopping-cart {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+  .item {
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .image img {
+    width: 50%;
+  }
+  .image,
+  .quantity,
+  .description {
+    width: 100%;
+    text-align: center;
+    margin: 6px 0;
+  }
+  .buttons {
+    margin-right: 20px;
+  }
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- menu -->
+    <nav class="navbar">
+        <div class="navdiv">
+            <div class="logo"><a href="../../../menu.html"><img src="../../../images/LOGO.png " alt=""></a> </div>
+
+
+            <ul>
+                <li><button class="openBtn" onclick="openSearch()"><img src="./imagesp/bg/icons8-search-100.png" alt=""
+                            style="width: 27px;"></button></li>
+                <li><a href="../../../menu.html">Trang Chủ</a></li>
+                <li><a href="#">Về Chúng Tôi</a></li>
+                <li><a href="../index.html">Sản Phẩm</a></li>
+                <button class="buttonTK"><a onclick="checkLoggedIn()">Tài Khoản</a></button>
+
+            </ul>
+        </div>
+    </nav>
+
+    <br>
+
+
+    <br>
+    <h1 style="text-align:center">Các Sản Phẩm Trong Giỏ Hàng</h1>
+    <br>
+    <!-- Shooping cart -->
+
+
+
+    <div class="shopping-cart">
+        <!-- Title -->
+        <div class="title">
+          Shopping Bag
+        </div>
+  
+        
+  
+        <h1 id="emptyCartMessage" style="text-align: center;">Đơn Hàng Trống</h1>
+  
+        
+      </div>
+      <div class="buttonApply" style="text-align: center; margin-top: 20px;">
+        <button onclick="applyDiscount()" style="background-color: #4CAF50; /* Green */
+                                                border: none;
+                                                width: 39%;
+                                                color: white;
+                                                padding: 10px 20px;
+                                                text-align: center;
+                                                text-decoration: none;
+                                                display: inline-block;
+                                                font-size: 16px;
+                                                cursor: pointer;
+                                                border-radius: 4px;">
+            Quay Lại Trang Chính
+        </button>
+    </div>
+
+    <script>
+        function applyDiscount() {
+            // Bạn có thể tùy chỉnh thông báo chào mừng ở đây
+            const greetingMessage = "Đơn Hàng Trống";
+    
+            // Hiển thị thông báo chào mừng
+            alert(greetingMessage);
+    
+            // Chuyển hướng đến trang khác (thay thế "trangB.html" bằng URL thực tế của Trang B)
+            window.location.href = "../../../index.html";
+        }
+    </script>
+  
+      <script type="text/javascript">
+        $('.minus-btn').on('click', function(e) {
+              e.preventDefault();
+              var $this = $(this);
+              var $input = $this.closest('div').find('input');
+              var value = parseInt($input.val());
+  
+              if (value > 1) {
+                  value = value - 1;
+              } else {
+                  value = 0;
+              }
+  
+          $input.val(value);
+  
+          });
+  
+          $('.plus-btn').on('click', function(e) {
+              e.preventDefault();
+              var $this = $(this);
+              var $input = $this.closest('div').find('input');
+              var value = parseInt($input.val());
+  
+              if (value < 100) {
+                value = value + 1;
+              } else {
+                  value =100;
+              }
+  
+              $input.val(value);
+          });
+  
+        $('.like-btn').on('click', function() {
+          $(this).toggleClass('is-active');
+        });
+      </script>
+
+
+
+
+
+    </div>
+
+    <br>
+    <!-- FOOTER -->
+
+    <footer>
+        <section>
+            <div id="containerFooter">
+
+                <div id="webFooter">
+                    <h3>POD VIỆT </h3>
+                    <p> HÚT đi </p>
+                    <p> Không chết </p>
+                    <p> có số </p>
+                    <p> hết rồi </p>
+                </div>
+                <div id="webFooter">
+                    <h3> thành viên: </h3>
+                    <p> Hào - SGU </p>
+                    <p> Khôi - VLU </p>
+                    <p> Quỳnh - Chuyên TDN </p>
+                </div>
+                <div id="webFooter">
+                    <h3> HOTLINE: </h3>
+                    <p> 03341910jqka2 </p>
+                    <p> tứ úy </p>
+                    <p> chặt </p>
+                    <p> Heo </p>
+
+                </div>
+                <div id="webFooter">
+                    <h3> address </h3>
+                    <p> 14/08 </p>
+                    <p> Trúc Quỳnh xinhhh </p>
+                    <p> American Thor </p>
+                    <p> united tết </p>
+                </div>
+            </div>
+            <div id="credit"><a href="https://www.facebook.com/DQAPodShop/"> ©Pod Real </a> &nbsp&nbsp&nbsp |
+                &nbsp&nbsp&nbsp
+                <a href="https://www.facebook.com/trucquynh.phamnguyen.9" target="_blank"> My love </a>
+            </div>
+        </section>
+
+    </footer>
+
+    <script>
+        // Sample product data (replace this with your actual data)
+        const products = [
+            {
+                name: "Pod 1 lần - 1",
+                category: "1lan",
+                price: 350.000,
+                image: "../imagesp/product/CS-25-300x300.jpg",
+                description: "Sống chết có số phú quý do trời"
+            },
+            {
+                name: "Pod 1 lần - 2",
+                category: "1lan",
+                price: 200.000,
+                image: "../imagesp/product/doloda-db7000-hoi-300x300.jpg",
+                description: "Sống chết có số phú quý do trời"
+            },
+            {
+                name: "Pod 1 lần - 3",
+                category: "1lans",
+                price: 250.000,
+                image: "./imagesp/product/doloda-mini-bar-300x300.jpg",
+                description: "Sống chết có số phú quý do trời"
+            },
+            {
+                name: "Pod 1 lần - 4",
+                category: "1lan",
+                price: 300.000,
+                image: "../imagesp/product/doloda-pebble-12000-hoi-300x300.jpg",
+                description: "Sống chết có số phú quý do trời."
+            },
+            {
+                name: "Pod 1 lần - 5",
+                category: "1lan",
+                price: 140.000,
+                image: "../imagesp/product/quik-5000-hoi-300x300.jpg",
+                description: "Sống chết có số phú quý do trời."
+            },
+            {
+                name: "Tinh Dầu 1",
+                category: "tinhdau",
+                price: 230.000,
+                image: "../imagesp/product/tinhdau/daddy-juice-300x300.jpg",
+                description: "Sống chết có số phú quý do trời."
+            },
+            {
+                name: "Tinh Dau 2",
+                category: "tinhdau",
+                price: 180.000,
+                image: "../imagesp/product/tinhdau/sweet-21-vape-fruity-blast-30ml-300x300.jpg",
+                description: "Sống chết có số phú quý do trời."
+            },
+            // Add more products as needed
+        ];
+
+
+        // Function to filter products based on search criteria
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const selectedCategory = document.getElementById('category').value;
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+
+            const filteredProducts = products.filter(product => {
+                const nameMatch = product.name.toLowerCase().includes(searchTerm);
+                const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
+                const priceMatch = (!minPrice || product.price >= minPrice) && (!maxPrice || product.price <= maxPrice);
+
+                return nameMatch && categoryMatch && priceMatch;
+            });
+
+            displayProducts(filteredProducts);
+        }
+
+        // Function to display products in the product-container
+        function displayProducts(products) {
+            const productContainer = document.getElementById('product-container');
+            productContainer.innerHTML = '';
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Add product information and make the entire card a clickable link
+                card.innerHTML = `
+            <a href="#" onclick="showProductDetails('${product.name}')">
+                <img src="${product.image}" alt="${product.name}" style="width:100%">
+                <h1>${product.name}</h1>
+                <p class="price">$${product.price.toFixed(2)}</p>
+                <p>${product.description}</p>
+                <p><button>Mua Ngay</button></p>
+            </a>
+        `;
+
+                productContainer.appendChild(card);
+            });
+        }
+
+        // Function to show product details (replace with your actual implementation)
+        function showProductDetails(productName) {
+            // Replace the following URL with the actual URL you want to navigate to for the clicked product
+            const productUrl = `./ProductDetail/`;
+
+            // Navigate to the specified URL
+            window.location.href = productUrl;
+        }
+
+        function resetSearch() {
+            // Clear the search input
+            document.getElementById('search-input').value = '';
+
+            // Reset the category dropdown to its default value
+            document.getElementById('category').value = 'all';
+
+            // Clear the price range inputs
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+
+            // Trigger the search function to reset the display
+            searchProducts();
+        }
+    </script>
+
+
+    <!-- script 1 -->
+    <script>
+        function openSearch() {
+            document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function closeSearch() {
+            document.getElementById("myOverlay").style.display = "none";
+        }
+
+
+
+    </script>
+
+    <script>
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        function checkLoggedIn() {
+            const isLoggedIn = localStorage.getItem('loggedInUser'); // Điều này có thể là biến cờ khác nếu bạn sử dụng cách kiểm tra khác
+
+            if (isLoggedIn) {
+                // Nếu đã đăng nhập, chuyển hướng đến trang a
+                window.location.href = "../../page_dadangkynhap/index.html";
+            } else {
+                // Nếu chưa đăng nhập, chuyển hướng đến trang b
+                window.location.href = "../../page_chuadangkynhap/indexNull.html";
+            }
+        }
+    </script>
+<!-- !Thông Báo KHi Vào Page -->
+<script>
+  // Function to display a welcome message when the page loads
+  function displayWelcomeMessage() {
+      // Customize the welcome message as needed
+      const welcomeMessage = "Đơn Hàng Đã Được Xử Lý";
+
+      // Show the welcome message using an alert (you can replace this with a modal or other UI)
+      alert(welcomeMessage);
+  }
+
+  // Call the displayWelcomeMessage function when the page has fully loaded
+  window.onload = function () {
+      displayWelcomeMessage();
+  };
+</script>
+</body>
+
+</html>
